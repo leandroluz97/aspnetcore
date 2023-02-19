@@ -7,17 +7,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication", "WebApplic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "controllerExample", "controllerExample\controllerExample.csproj", "{B7CCF7F8-0BDF-4E80-8544-E28BC0307549}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankApp", "BankApp\BankApp.csproj", "{DF711AE7-CF11-4780-9C41-FA28C9C2DB7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankApp", "BankApp\BankApp.csproj", "{DF711AE7-CF11-4780-9C41-FA28C9C2DB7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelValidationExample", "ModelValidationExample\ModelValidationExample.csproj", "{0A7EA6E5-FB25-44FB-960B-C0098D8EEF36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelValidationExample", "ModelValidationExample\ModelValidationExample.csproj", "{0A7EA6E5-FB25-44FB-960B-C0098D8EEF36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewsExample", "ViewsExample\ViewsExample.csproj", "{8F6A0CC2-3EA8-4E29-89BF-792DAF633A62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewsExample", "ViewsExample\ViewsExample.csproj", "{8F6A0CC2-3EA8-4E29-89BF-792DAF633A62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyEjectionExample", "DependencyEjectionExample\DependencyEjectionExample.csproj", "{4594FB4F-DA01-499F-A21F-4BC87D7A0CB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyEjectionExample", "DependencyEjectionExample\DependencyEjectionExample.csproj", "{4594FB4F-DA01-499F-A21F-4BC87D7A0CB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{5EE38572-2D6A-4B83-AD6B-A04267849C63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{5EE38572-2D6A-4B83-AD6B-A04267849C63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceContracts", "ServiceContracts\ServiceContracts.csproj", "{F449D049-F647-4197-A3C7-D69093CF5F78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceContracts", "ServiceContracts\ServiceContracts.csproj", "{F449D049-F647-4197-A3C7-D69093CF5F78}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Weather", "Weather", "{7314EFCC-10C7-4F0A-AD46-D6C1DD8FDE40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weather_app", "Weather_app\Weather_app.csproj", "{FA926239-96EB-45AE-8CBD-148B439FA19B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Service\Services.csproj", "{5C8994F3-325E-4ABB-8634-C4957C04822A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceContracts", "ServiceContract\ServiceContracts.csproj", "{ACEDB5FE-D759-4586-AD38-D529726C30DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{BDACBC2A-F811-4EAD-BE81-4619EBFC0C85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,9 +67,31 @@ Global
 		{F449D049-F647-4197-A3C7-D69093CF5F78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F449D049-F647-4197-A3C7-D69093CF5F78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F449D049-F647-4197-A3C7-D69093CF5F78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA926239-96EB-45AE-8CBD-148B439FA19B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA926239-96EB-45AE-8CBD-148B439FA19B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA926239-96EB-45AE-8CBD-148B439FA19B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA926239-96EB-45AE-8CBD-148B439FA19B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C8994F3-325E-4ABB-8634-C4957C04822A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C8994F3-325E-4ABB-8634-C4957C04822A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C8994F3-325E-4ABB-8634-C4957C04822A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C8994F3-325E-4ABB-8634-C4957C04822A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACEDB5FE-D759-4586-AD38-D529726C30DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACEDB5FE-D759-4586-AD38-D529726C30DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACEDB5FE-D759-4586-AD38-D529726C30DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACEDB5FE-D759-4586-AD38-D529726C30DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDACBC2A-F811-4EAD-BE81-4619EBFC0C85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDACBC2A-F811-4EAD-BE81-4619EBFC0C85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDACBC2A-F811-4EAD-BE81-4619EBFC0C85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDACBC2A-F811-4EAD-BE81-4619EBFC0C85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FA926239-96EB-45AE-8CBD-148B439FA19B} = {7314EFCC-10C7-4F0A-AD46-D6C1DD8FDE40}
+		{5C8994F3-325E-4ABB-8634-C4957C04822A} = {7314EFCC-10C7-4F0A-AD46-D6C1DD8FDE40}
+		{ACEDB5FE-D759-4586-AD38-D529726C30DE} = {7314EFCC-10C7-4F0A-AD46-D6C1DD8FDE40}
+		{BDACBC2A-F811-4EAD-BE81-4619EBFC0C85} = {7314EFCC-10C7-4F0A-AD46-D6C1DD8FDE40}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F4171F80-6247-4366-B8C0-F2AF66F2DC5B}
