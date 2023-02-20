@@ -29,6 +29,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceContracts", "Service
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{BDACBC2A-F811-4EAD-BE81-4619EBFC0C85}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Environment", "Environment", "{7513E00A-6212-44A9-9B9F-2CA5F12F94E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnvironmentsExample", "EnviromentsExample\EnvironmentsExample.csproj", "{2392F82A-AC66-4338-A21E-4481C09B3C53}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{A042E6A3-F7BA-426D-B4A2-C4F4DB066834}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationExample", "ConfigurationExample\ConfigurationExample.csproj", "{B4596479-3042-48AC-A9A5-6D7E7E41A9EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +91,14 @@ Global
 		{BDACBC2A-F811-4EAD-BE81-4619EBFC0C85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDACBC2A-F811-4EAD-BE81-4619EBFC0C85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDACBC2A-F811-4EAD-BE81-4619EBFC0C85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2392F82A-AC66-4338-A21E-4481C09B3C53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2392F82A-AC66-4338-A21E-4481C09B3C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2392F82A-AC66-4338-A21E-4481C09B3C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2392F82A-AC66-4338-A21E-4481C09B3C53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4596479-3042-48AC-A9A5-6D7E7E41A9EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4596479-3042-48AC-A9A5-6D7E7E41A9EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4596479-3042-48AC-A9A5-6D7E7E41A9EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4596479-3042-48AC-A9A5-6D7E7E41A9EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +108,8 @@ Global
 		{5C8994F3-325E-4ABB-8634-C4957C04822A} = {7314EFCC-10C7-4F0A-AD46-D6C1DD8FDE40}
 		{ACEDB5FE-D759-4586-AD38-D529726C30DE} = {7314EFCC-10C7-4F0A-AD46-D6C1DD8FDE40}
 		{BDACBC2A-F811-4EAD-BE81-4619EBFC0C85} = {7314EFCC-10C7-4F0A-AD46-D6C1DD8FDE40}
+		{2392F82A-AC66-4338-A21E-4481C09B3C53} = {7513E00A-6212-44A9-9B9F-2CA5F12F94E5}
+		{B4596479-3042-48AC-A9A5-6D7E7E41A9EE} = {A042E6A3-F7BA-426D-B4A2-C4F4DB066834}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F4171F80-6247-4366-B8C0-F2AF66F2DC5B}
