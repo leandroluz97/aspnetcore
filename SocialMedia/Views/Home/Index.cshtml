@@ -1,3 +1,10 @@
 ﻿
 <h1>Social Media Links</h1>
-<a href=@ViewBag.Facebook>Facebook</a>
+<div class="container">
+    <a href=@ViewBag.Facebook>Facebook</a>  
+    <a href=@ViewBag.Instagram>Instagram</a>
+<a href=@ViewBag.Twitter>Twitter</a>
+<environment exclude="Development">
+    <a href=@ViewBag.Instagram>Instagram</a>
+</environment>
+</div>
