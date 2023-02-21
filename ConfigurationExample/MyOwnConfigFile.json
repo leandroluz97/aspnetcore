@@ -1,0 +1,6 @@
+{
+  "weatherApi": {
+    "Api": "http://wwww.weather.com",
+    "ApiKey": "KEY_API .development"
+  }
+}
