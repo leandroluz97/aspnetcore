@@ -1,0 +1,19 @@
+﻿using ServicesContracts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CRUDTests
+{
+    internal class CountriesServiceTest
+    {
+        private readonly IContriesService _countriesServices;
+
+        public CountriesServiceTest()
+        {
+
+        }
+    }
+}

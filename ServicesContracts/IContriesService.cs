@@ -1,7 +1,10 @@
-﻿namespace ServicesContracts
+﻿using CRUDoperations.DTO;
+
+namespace ServicesContracts
 {
-    public class IContriesService
+    public interface IContriesService
     {
+        CountryResponse AddCountry(CountryAddRequest? countryAddRequest);
 
     }
 }
