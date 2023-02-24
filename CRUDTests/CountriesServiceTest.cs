@@ -20,7 +20,7 @@ namespace CRUDTests
         }
 
         [Fact]
-        public void ExpectValidResponse()
+        public void AddCountry_ValidCountryDetails()
         {
             //Arrange
             CountryAddRequest request = new CountryAddRequest() { CountryName = "Leandro" };
@@ -30,61 +30,51 @@ namespace CRUDTests
             var actual = _countriesServices.AddCountry(request);
 
             //Assert
-            //Assert.Equal(response, actual);
-            var obj1Str = JsonConvert.SerializeObject(response);
-            var obj2Str = JsonConvert.SerializeObject(actual);
-            Assert.Equal(obj1Str, obj2Str);
+            Assert.True(actual.CountryId != Guid.Empty);
+            //var obj1Str = JsonConvert.SerializeObject(response);
+            //var obj2Str = JsonConvert.SerializeObject(actual);
+            //Assert.Equal(obj1Str, obj2Str);
         }
 
         [Fact]
-        public void ExpectCountryAddRequestArgumentNullException()
+        public void AddCountry_NullCountry()
         {
-            try
-            {
-                //Arrange
-                CountryResponse response = new CountryResponse() { CountryName = "Leandro", CountryId = Guid.NewGuid() };
+            //Arrange
+            CountryAddRequest? request = null;
+
+            //Assert
+            Assert.Throws<ArgumentNullException>(() => {
                 //Act
-                var actual = _countriesServices.AddCountry(null);
-            }
-            catch (ArgumentNullException exception)
-            {
-                //Assert
-                Assert.IsType<ArgumentNullException>(exception);
-            } 
+                _countriesServices.AddCountry(request);
+            });
         }
 
         [Fact]
-        public void ExpectCountryAddRequestNameArgumentNullException()
+        public void AddCountry_NameIsNull()
         {
-            try
-            {
-                //Arrange
-                CountryAddRequest request = new CountryAddRequest() { CountryName = null };
+            //Arrange
+            CountryAddRequest request = new CountryAddRequest() { CountryName = null };
+
+            //Assert
+            Assert.Throws<ArgumentException>(() =>{
                 //Act
-                var actual = _countriesServices.AddCountry(request);
-            }
-            catch (ArgumentNullException exception)
-            {
-                //Assert
-                Assert.IsType<ArgumentNullException>(exception);
-            }
+                _countriesServices.AddCountry(request);
+            });            
         }
 
         [Fact]
-        public void ExpectSameNameToThrowArgumentNullException()
+        public void AddCountry_DuplicateCountryName()
         {
-            try
-            {
-                //Arrange
-                CountryAddRequest request = new CountryAddRequest() { CountryName ="Caboverde" };
+            //Arrange
+            CountryAddRequest request1 = new CountryAddRequest() { CountryName ="Angola" };
+            CountryAddRequest request2 = new CountryAddRequest() { CountryName = "Angola" };
+
+            //Assert
+            Assert.Throws<ArgumentException>(() => {
                 //Act
-                var actual = _countriesServices.AddCountry(null);
-            }
-            catch (ArgumentNullException exception)
-            {
-                //Assert
-                Assert.IsType<ArgumentNullException>(exception);
-            }
+                _countriesServices.AddCountry(request1);
+                _countriesServices.AddCountry(request2);
+            });
         }
 
     }

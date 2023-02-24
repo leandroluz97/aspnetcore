@@ -24,13 +24,14 @@ namespace XServices
             }
             if (string.IsNullOrEmpty(countryAddRequest.CountryName))
             {
-                throw new ArgumentNullException();
+                throw new ArgumentException();
             }
             if(_countries.Find(c => c.CountryName == countryAddRequest.CountryName) != null) 
             {
-                throw new ArgumentNullException();
+                throw new ArgumentException();
             }
             Country country = new Country() { CountryId = new Guid("20d5495a-1995-4f9e-827d-a99494d25cfa"), CountryName = countryAddRequest.CountryName };
+            _countries.Add(country);
             return country.ToCountryResponse();
         }
     }
