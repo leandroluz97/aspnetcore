@@ -24,16 +24,13 @@ namespace CRUDTests
         {
             //Arrange
             CountryAddRequest request = new CountryAddRequest() { CountryName = "Leandro" };
-            CountryResponse response = new CountryResponse() { CountryName= "Leandro", CountryId = new Guid("20d5495a-1995-4f9e-827d-a99494d25cfa") };
             
             //Act
             var actual = _countriesServices.AddCountry(request);
 
             //Assert
+            //JsonConvert.SerializeObject(response);
             Assert.True(actual.CountryId != Guid.Empty);
-            //var obj1Str = JsonConvert.SerializeObject(response);
-            //var obj2Str = JsonConvert.SerializeObject(actual);
-            //Assert.Equal(obj1Str, obj2Str);
         }
 
         [Fact]

@@ -20,17 +20,21 @@ namespace XServices
         {
             if(countryAddRequest == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(countryAddRequest));
             }
             if (string.IsNullOrEmpty(countryAddRequest.CountryName))
             {
-                throw new ArgumentException();
+                throw new ArgumentException(nameof(countryAddRequest.CountryName));
             }
-            if(_countries.Find(c => c.CountryName == countryAddRequest.CountryName) != null) 
+            if(_countries.Where(c => c.CountryName == countryAddRequest.CountryName).Count() > 0) 
             {
-                throw new ArgumentException();
+                throw new ArgumentException("Given country name already exists!");
             }
-            Country country = new Country() { CountryId = new Guid("20d5495a-1995-4f9e-827d-a99494d25cfa"), CountryName = countryAddRequest.CountryName };
+            Country country = new Country() 
+            { 
+                CountryId = Guid.NewGuid(), 
+                CountryName = countryAddRequest.CountryName
+            };
             _countries.Add(country);
             return country.ToCountryResponse();
         }
