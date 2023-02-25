@@ -27,10 +27,12 @@ namespace CRUDTests
             
             //Act
             var actual = _countriesServices.AddCountry(request);
+            List<CountryResponse> countries = _countriesServices.GetAllCountries();
 
             //Assert
             //JsonConvert.SerializeObject(response);
             Assert.True(actual.CountryId != Guid.Empty);
+            Assert.Contains(actual, countries);
         }
 
         [Fact]
@@ -72,6 +74,42 @@ namespace CRUDTests
                 _countriesServices.AddCountry(request1);
                 _countriesServices.AddCountry(request2);
             });
+        }
+
+        [Fact]
+        public void GetAllCountries_Countries()
+        {
+            //Arrange
+            List<CountryAddRequest> countriesRequestList = new List<CountryAddRequest>()
+            {
+                new CountryAddRequest() { CountryName = "Angola" },
+                new CountryAddRequest() { CountryName = "Caboverde" },
+                new CountryAddRequest() { CountryName = "Portugal" }
+            };
+
+            List<CountryResponse> countriesResponses = new List<CountryResponse>();
+            foreach (CountryAddRequest request in countriesRequestList)
+            {
+                countriesResponses.Add(_countriesServices.AddCountry(request));
+            }
+
+            //Act
+            List<CountryResponse> countries = _countriesServices.GetAllCountries();
+
+            foreach (CountryResponse response in countriesResponses)
+            {
+                //Assert
+                Assert.Contains(response, countries);
+            }
+        }
+
+        [Fact]
+        public void GetAllCountries_EmptyList()
+        {
+            //Act
+            List<CountryResponse> countries = _countriesServices.GetAllCountries();
+            //Assert
+            Assert.True(0 == countries.Count);
         }
 
     }
