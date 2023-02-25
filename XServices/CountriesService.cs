@@ -10,9 +10,9 @@ namespace XServices
         public CountriesService()
         {
             _countries = new List<Country>();
-            _countries.Add(new Country() { CountryId = Guid.NewGuid(), CountryName = "Caboverde" });
-            _countries.Add(new Country() { CountryId = Guid.NewGuid(), CountryName = "Portugal" });
-            _countries.Add(new Country() { CountryId = Guid.NewGuid(), CountryName = "Brazil" });
+            //_countries.Add(new Country() { CountryId = Guid.NewGuid(), CountryName = "Caboverde" });
+            //_countries.Add(new Country() { CountryId = Guid.NewGuid(), CountryName = "Portugal" });
+            //_countries.Add(new Country() { CountryId = Guid.NewGuid(), CountryName = "Brazil" });
 
         }
 
@@ -37,6 +37,11 @@ namespace XServices
             };
             _countries.Add(country);
             return country.ToCountryResponse();
+        }
+
+        public List<CountryResponse> GetAllCountries()
+        {
+            return _countries.Select(country => country.ToCountryResponse()).ToList();
         }
     }
 }
