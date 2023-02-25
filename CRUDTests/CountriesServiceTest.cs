@@ -121,7 +121,7 @@ namespace CRUDTests
         public void GetCountryByCountryId_GuidIsNull()
         {
             //Arrange
-            Guid guid = Guid.Empty;
+            Guid? guid = null;
 
             //Assert
             Assert.Throws<ArgumentNullException>(() =>
@@ -135,7 +135,7 @@ namespace CRUDTests
         public void GetCountryByCountryId_GuidIsInvalid()
         {
             //Arrange
-            Guid guid = new Guid("98888");
+            Guid guid = Guid.Empty;
 
             //Assert
             Assert.Throws<ArgumentException>(() =>
@@ -143,7 +143,6 @@ namespace CRUDTests
                 //Act
                 _countriesServices.GetCountryByCountryId(guid);
             });
-
         }
 
         [Fact]
