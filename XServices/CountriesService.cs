@@ -44,9 +44,25 @@ namespace XServices
             return _countries.Select(country => country.ToCountryResponse()).ToList();
         }
 
-        public CountryResponse GetCountryByCountryId(Guid countryId)
+        public CountryResponse? GetCountryByCountryId(Guid? countryId)
         {
-            throw new NotImplementedException();
+            if (countryId == null)
+            {
+                throw new ArgumentNullException(nameof(countryId));
+            }
+
+            if (countryId == Guid.Empty)
+            {
+                throw new ArgumentException(nameof(countryId));
+            }
+            Country? country = _countries.FirstOrDefault(c => c.CountryId.Equals(countryId));
+
+            if(country == null)
+            {
+                return null;
+            }
+
+            return country.ToCountryResponse();
         }
     }
 }
