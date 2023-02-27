@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ServicesContracts
 {
-    public interface IPersonContracts
+    public interface IPersonService
     {
         PersonResponse AddPerson(PersonAddRequest personRequest);
         List<PersonResponse> GetAllPersons();
