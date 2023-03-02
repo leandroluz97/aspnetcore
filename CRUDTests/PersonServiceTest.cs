@@ -24,7 +24,7 @@ namespace CRUDTests
         public void AddPerson_NullPerson()
         {
             //Arrange
-            PersonAddRequest request = null;
+            PersonAddRequest? request = null;
         
             //Assert
             Assert.Throws<ArgumentNullException>(() => {
@@ -34,7 +34,7 @@ namespace CRUDTests
         }
 
         [Fact]
-        public void AddPerson_NullPersonName()
+        public void AddPerson_PersonNameIsNull()
         {
             //Arrange
             PersonAddRequest request = new PersonAddRequest() { PersonName = null};
@@ -63,9 +63,11 @@ namespace CRUDTests
 
             //Act
             PersonResponse personResponse = _personService.AddPerson(request);
+            List<PersonResponse> persons = _personService.GetAllPersons();
 
             //Assert
             Assert.True(personResponse.PersonId != Guid.Empty);
+            Assert.Contains(personResponse, persons);
             
         }
 
