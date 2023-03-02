@@ -4,7 +4,7 @@ using ServicesContracts;
 
 namespace XServices
 {
-    public class CountriesService : IContriesService
+    public class CountriesService : ICountriesService
     {
         List<Country> _countries;
         public CountriesService()
