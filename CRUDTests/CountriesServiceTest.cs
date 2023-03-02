@@ -13,7 +13,7 @@ namespace CRUDTests
 {
     public class CountriesServiceTest
     {
-        private readonly IContriesService _countriesServices;
+        private readonly ICountriesService _countriesServices;
         public CountriesServiceTest()
         {
             _countriesServices = new CountriesService();
