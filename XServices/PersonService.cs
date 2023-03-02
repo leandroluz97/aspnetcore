@@ -39,7 +39,6 @@ namespace XServices
                 throw new ArgumentException("PersonName can't be empty");
             }
 
-
             ValidationHelper.ModelValidation(personRequest);
 
             Person person = personRequest.ToPerson();
@@ -53,6 +52,24 @@ namespace XServices
         public List<PersonResponse> GetAllPersons()
         {
             return _persons.Select(person => person.ToPersonResponse()).ToList();
+        }
+
+        public PersonResponse GetPersonByPersonId(Guid? personId)
+        {
+            if(personId == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(personId));
+            }
+
+            Person? person = _persons.Where(person => person.PersonId.Equals(personId)).FirstOrDefault();
+
+            if(person == null)
+            {
+                return null;
+            }
+
+            return person.ToPersonResponse();
+            
         }
     }
 }

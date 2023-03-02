@@ -54,7 +54,7 @@ namespace CRUDTests
             {
                 PersonName = "John Doe",
                 Address = "Lisbon, Portugal",
-                DateOfBirth = Convert.ToDateTime("1980-12-02"),
+                DateOfBirth = DateTime.Parse("1980-12-02"),
                 CountryId = Guid.NewGuid(),
                 Email = "johndoe@gmail.com",
                 Gender = GenderOptions.Male,
@@ -68,7 +68,50 @@ namespace CRUDTests
             //Assert
             Assert.True(personResponse.PersonId != Guid.Empty);
             Assert.Contains(personResponse, persons);
-            
+        }
+
+        [Fact]
+        public void GetPersonByPersonId_FoundPerson()
+        {
+            //Arrange
+            PersonAddRequest request = new PersonAddRequest()
+            {
+                PersonName = "John Doe",
+                Address = "Lisbon, Portugal",
+                DateOfBirth = DateTime.Parse("1980-12-02"),
+                CountryId = Guid.NewGuid(),
+                Email = "johndoe@gmail.com",
+                Gender = GenderOptions.Male,
+                ReceiveNewsLetters = true
+            };
+
+            //Act 
+            PersonResponse response = _personService.AddPerson(request);
+            PersonResponse person = _personService.GetPersonByPersonId(response.PersonId);
+
+            //Assert
+            Assert.True(person.PersonId != Guid.Empty);
+          
+        }
+
+        [Fact]
+        public void GetPersonByPersonId_PersonIdIsNull()
+        {
+            Guid personId = Guid.Empty;
+
+            Assert.Throws<ArgumentNullException>(() => {
+                _personService.GetPersonByPersonId(personId);
+            });
+        }
+
+        [Fact]
+        public void GetPersonByPersonId_NotFound()
+        {
+            Guid personId = Guid.NewGuid();
+
+            PersonResponse person = _personService.GetPersonByPersonId(personId);
+
+            Assert.Null(person);
         }
 
 
