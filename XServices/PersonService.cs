@@ -3,9 +3,11 @@ using ServicesContracts;
 using ServicesContracts.DTO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XServices.Helpers;
 
 namespace XServices
 {
@@ -37,8 +39,12 @@ namespace XServices
                 throw new ArgumentException("PersonName can't be empty");
             }
 
+
+            ValidationHelper.ModelValidation(personRequest);
+
             Person person = personRequest.ToPerson();
             person.PersonId = Guid.NewGuid();
+
             _persons.Add(person);
             
             return ConvertPersonToPersonResponse(person);
