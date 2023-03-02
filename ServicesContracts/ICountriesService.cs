@@ -2,7 +2,7 @@
 
 namespace ServicesContracts
 {
-    public interface IContriesService
+    public interface ICountriesService
     {
         CountryResponse AddCountry(CountryAddRequest? countryAddRequest);
         List<CountryResponse> GetAllCountries();
