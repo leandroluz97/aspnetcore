@@ -1,4 +1,5 @@
-﻿using ServicesContracts;
+﻿using CRUDoperations.DTO;
+using ServicesContracts;
 using ServicesContracts.DTO;
 using ServicesContracts.Enums;
 using System;
@@ -14,12 +15,15 @@ namespace CRUDTests
     public class PersonServiceTest
     {
         private readonly IPersonService _personService;
+        private readonly ICountriesService _countriesService;
 
         public PersonServiceTest()
         {
             _personService = new PersonService();
+            _countriesService = new CountriesService();
         }
 
+        #region AddPerson
         [Fact]
         public void AddPerson_NullPerson()
         {
@@ -69,17 +73,22 @@ namespace CRUDTests
             Assert.True(personResponse.PersonId != Guid.Empty);
             Assert.Contains(personResponse, persons);
         }
+        #endregion
 
+        #region GetPersonByPersonId
+        
         [Fact]
         public void GetPersonByPersonId_FoundPerson()
         {
             //Arrange
+            CountryAddRequest countryRequest = new CountryAddRequest() { CountryName = "Portugal" };
+            CountryResponse countryResponse = _countriesService.AddCountry(countryRequest);
             PersonAddRequest request = new PersonAddRequest()
             {
                 PersonName = "John Doe",
                 Address = "Lisbon, Portugal",
                 DateOfBirth = DateTime.Parse("1980-12-02"),
-                CountryId = Guid.NewGuid(),
+                CountryId = countryResponse.CountryId,
                 Email = "johndoe@gmail.com",
                 Gender = GenderOptions.Male,
                 ReceiveNewsLetters = true
@@ -113,7 +122,33 @@ namespace CRUDTests
 
             Assert.Null(person);
         }
+        #endregion
 
+        #region GetAllPersons
+        [Fact]
+        public void GetAllPersons_IsEmpty()
+        {
+            List<PersonResponse> persons = _personService.GetAllPersons();
+            Assert.Empty(persons);
+        }
 
+        [Fact]
+        public void GetAllPersons_AllPersons()
+        {
+            PersonAddRequest requestRequest = new PersonAddRequest()
+            {
+                PersonName = "John Doe",
+                Address = "Lisbon, Portugal",
+                DateOfBirth = DateTime.Parse("1980-12-02"),
+                CountryId = Guid.NewGuid(),
+                Email = "johndoe@gmail.com",
+                Gender = GenderOptions.Male,
+                ReceiveNewsLetters = true
+            };
+             _personService.AddPerson(requestRequest);
+            List<PersonResponse> persons = _personService.GetAllPersons();
+            Assert.True(persons.Any());
+        }
+        #endregion
     }
 }

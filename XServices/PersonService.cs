@@ -13,7 +13,7 @@ namespace XServices
 {
     public class PersonService : IPersonService
     {
-       readonly private List<Person> _persons;
+        readonly private List<Person> _persons;
         readonly private ICountriesService _countriesService;
 
         public PersonService()
@@ -61,7 +61,7 @@ namespace XServices
                 throw new ArgumentNullException(nameof(personId));
             }
 
-            Person? person = _persons.Where(person => person.PersonId.Equals(personId)).FirstOrDefault();
+            Person? person = _persons.FirstOrDefault(person => person.PersonId.Equals(personId));
 
             if(person == null)
             {
@@ -69,7 +69,6 @@ namespace XServices
             }
 
             return person.ToPersonResponse();
-            
         }
     }
 }
