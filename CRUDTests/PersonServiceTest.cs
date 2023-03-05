@@ -135,19 +135,42 @@ namespace CRUDTests
         [Fact]
         public void GetAllPersons_AllPersons()
         {
-            PersonAddRequest requestRequest = new PersonAddRequest()
+            CountryAddRequest countryRequest = new CountryAddRequest() { CountryName = "Portugal" };
+            CountryResponse countryResponse = _countriesService.AddCountry(countryRequest);
+            PersonAddRequest personRequest1 = new PersonAddRequest()
             {
                 PersonName = "John Doe",
                 Address = "Lisbon, Portugal",
                 DateOfBirth = DateTime.Parse("1980-12-02"),
-                CountryId = Guid.NewGuid(),
+                CountryId = countryResponse.CountryId,
                 Email = "johndoe@gmail.com",
                 Gender = GenderOptions.Male,
                 ReceiveNewsLetters = true
             };
-             _personService.AddPerson(requestRequest);
+            PersonAddRequest personRequest2 = new PersonAddRequest()
+            {
+                PersonName = "John Doe",
+                Address = "Lisbon, Portugal",
+                DateOfBirth = DateTime.Parse("1980-12-02"),
+                CountryId = countryResponse.CountryId,
+                Email = "johndoe@gmail.com",
+                Gender = GenderOptions.Male,
+                ReceiveNewsLetters = true
+            };
+            
+            List<PersonAddRequest> personsList = new List<PersonAddRequest>(){personRequest1, personRequest2};
+            List<PersonResponse> personsResponse = new List<PersonResponse>();
+            foreach (PersonAddRequest person in personsList)
+            {
+                personsResponse.Add(_personService.AddPerson(person));
+            }
+
             List<PersonResponse> persons = _personService.GetAllPersons();
-            Assert.True(persons.Any());
+            foreach (PersonResponse person in persons)
+            {
+                Assert.Contains(person, personsResponse);
+            }
+            //Assert.NotEmpty(persons);
         }
         #endregion
     }
