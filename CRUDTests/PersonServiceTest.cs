@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using XServices;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace CRUDTests
 {
@@ -16,11 +17,13 @@ namespace CRUDTests
     {
         private readonly IPersonService _personService;
         private readonly ICountriesService _countriesService;
+        private readonly ITestOutputHelper _outputHelper;
 
-        public PersonServiceTest()
+        public PersonServiceTest(ITestOutputHelper testOutputHelper)
         {
             _personService = new PersonService();
             _countriesService = new CountriesService();
+            _outputHelper = testOutputHelper;
         }
 
         #region AddPerson
@@ -164,7 +167,11 @@ namespace CRUDTests
             {
                 personsResponse.Add(_personService.AddPerson(person));
             }
-
+            //Equivalent to Console.WriteLine()
+            foreach (PersonResponse p in personsResponse)
+            {
+                _outputHelper.WriteLine(p.ToString());
+            }
             List<PersonResponse> persons = _personService.GetAllPersons();
             foreach (PersonResponse person in persons)
             {

@@ -37,7 +37,7 @@ namespace ServicesContracts.DTO
                     Email == person.Email &&
                     DateOfBirth == person.DateOfBirth &&
                     Gender == person.Gender &&
-                    CountryId.Equals(person.Country) &&
+                    CountryId.ToString() == person.CountryId.ToString() &&
                     Address == person.Address &&
                     ReceiveNewsLetters == person.ReceiveNewsLetters;
         }
@@ -45,6 +45,11 @@ namespace ServicesContracts.DTO
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"Person ID: {PersonId}, Person Name: {PersonName}, Email: {Email}, Date of Birth:{DateOfBirth?.ToString("dd MMM yyyy")}, Gender:{Gender?.ToString()}, Country ID: {CountryId}, Address: {Address}, Receive News Letters: {ReceiveNewsLetters}";
         }
     }
 
