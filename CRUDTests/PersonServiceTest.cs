@@ -288,5 +288,65 @@ namespace CRUDTests
             }
         }
         #endregion
+
+        #region GetSortedPersons
+        //When sort based on PersonName in DESC
+        [Fact]
+        public void GetSortedPersons()
+        {
+            CountryAddRequest countryRequest = new CountryAddRequest() { CountryName = "Portugal" };
+            CountryResponse countryResponse = _countriesService.AddCountry(countryRequest);
+            PersonAddRequest personRequest1 = new PersonAddRequest()
+            {
+                PersonName = "John Doe",
+                Address = "Lisbon, Portugal",
+                DateOfBirth = DateTime.Parse("1980-12-02"),
+                CountryId = countryResponse.CountryId,
+                Email = "johndoe@gmail.com",
+                Gender = GenderOptions.Male,
+                ReceiveNewsLetters = true
+            };
+            PersonAddRequest personRequest2 = new PersonAddRequest()
+            {
+                PersonName = "John Doey",
+                Address = "Lisbon, Portugal",
+                DateOfBirth = DateTime.Parse("1980-12-02"),
+                CountryId = countryResponse.CountryId,
+                Email = "johndoe@gmail.com",
+                Gender = GenderOptions.Male,
+                ReceiveNewsLetters = true
+            };
+            PersonAddRequest personRequest3 = new PersonAddRequest()
+            {
+                PersonName = "Marta Jones",
+                Address = "Lisbon, Portugal",
+                DateOfBirth = DateTime.Parse("1990-12-02"),
+                CountryId = countryResponse.CountryId,
+                Email = "Martajones@gmail.com",
+                Gender = GenderOptions.Male,
+                ReceiveNewsLetters = true
+            };
+
+            List<PersonAddRequest> personsList = new List<PersonAddRequest>() { personRequest1, personRequest2, personRequest3 };
+            List<PersonResponse> personsResponse = new List<PersonResponse>();
+            foreach (PersonAddRequest person in personsList)
+            {
+                personsResponse.Add(_personService.AddPerson(person));
+            }
+            //Equivalent to Console.WriteLine()
+            foreach (PersonResponse p in personsResponse)
+            {
+                _outputHelper.WriteLine(p.ToString());
+            }
+            List<PersonResponse> allPersons = _personService.GetAllPersons();
+            List<PersonResponse> persons = _personService.GetSortedPersons(allPersons, nameof(PersonAddRequest.PersonName), SortOrderOptions.DESC);
+            personsResponse = personsResponse.OrderByDescending(temp => temp.PersonName).ToList();
+
+            for (int i = 0; i < personsResponse.Count; i++)
+            {
+                Assert.Equal(personsResponse[i], persons[i]);
+            }
+        }
+        #endregion
     }
 }
