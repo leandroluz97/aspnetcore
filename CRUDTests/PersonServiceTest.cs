@@ -180,5 +180,113 @@ namespace CRUDTests
             //Assert.NotEmpty(persons);
         }
         #endregion
+
+        #region GetFilteredPersons
+        [Fact]
+        public void GetFilteredPersons_EmptySearchText()
+        {
+            CountryAddRequest countryRequest = new CountryAddRequest() { CountryName = "Portugal" };
+            CountryResponse countryResponse = _countriesService.AddCountry(countryRequest);
+            PersonAddRequest personRequest1 = new PersonAddRequest()
+            {
+                PersonName = "John Doe",
+                Address = "Lisbon, Portugal",
+                DateOfBirth = DateTime.Parse("1980-12-02"),
+                CountryId = countryResponse.CountryId,
+                Email = "johndoe@gmail.com",
+                Gender = GenderOptions.Male,
+                ReceiveNewsLetters = true
+            };
+            PersonAddRequest personRequest2 = new PersonAddRequest()
+            {
+                PersonName = "John Doe",
+                Address = "Lisbon, Portugal",
+                DateOfBirth = DateTime.Parse("1980-12-02"),
+                CountryId = countryResponse.CountryId,
+                Email = "johndoe@gmail.com",
+                Gender = GenderOptions.Male,
+                ReceiveNewsLetters = true
+            };
+
+            List<PersonAddRequest> personsList = new List<PersonAddRequest>() { personRequest1, personRequest2 };
+            List<PersonResponse> personsResponse = new List<PersonResponse>();
+            foreach (PersonAddRequest person in personsList)
+            {
+                personsResponse.Add(_personService.AddPerson(person));
+            }
+            //Equivalent to Console.WriteLine()
+            foreach (PersonResponse p in personsResponse)
+            {
+                _outputHelper.WriteLine(p.ToString());
+            }
+            List<PersonResponse> persons = _personService.GetFilteredPersons(nameof(PersonAddRequest.PersonName), "");
+            foreach (PersonResponse person in persons)
+            {
+                Assert.Contains(person, personsResponse);
+            }
+        }
+
+        [Fact]
+        public void GetFilteredPersons_FilteredSearchText()
+        {
+            CountryAddRequest countryRequest = new CountryAddRequest() { CountryName = "Portugal" };
+            CountryResponse countryResponse = _countriesService.AddCountry(countryRequest);
+            PersonAddRequest personRequest1 = new PersonAddRequest()
+            {
+                PersonName = "John Doe",
+                Address = "Lisbon, Portugal",
+                DateOfBirth = DateTime.Parse("1980-12-02"),
+                CountryId = countryResponse.CountryId,
+                Email = "johndoe@gmail.com",
+                Gender = GenderOptions.Male,
+                ReceiveNewsLetters = true
+            };
+            PersonAddRequest personRequest2 = new PersonAddRequest()
+            {
+                PersonName = "John Doey",
+                Address = "Lisbon, Portugal",
+                DateOfBirth = DateTime.Parse("1980-12-02"),
+                CountryId = countryResponse.CountryId,
+                Email = "johndoe@gmail.com",
+                Gender = GenderOptions.Male,
+                ReceiveNewsLetters = true
+            };
+            PersonAddRequest personRequest3 = new PersonAddRequest()
+            {
+                PersonName = "Marta Jones",
+                Address = "Lisbon, Portugal",
+                DateOfBirth = DateTime.Parse("1990-12-02"),
+                CountryId = countryResponse.CountryId,
+                Email = "Martajones@gmail.com",
+                Gender = GenderOptions.Male,
+                ReceiveNewsLetters = true
+            };
+
+            List<PersonAddRequest> personsList = new List<PersonAddRequest>() { personRequest1, personRequest2, personRequest3 };
+            List<PersonResponse> personsResponse = new List<PersonResponse>();
+            foreach (PersonAddRequest person in personsList)
+            {
+                personsResponse.Add(_personService.AddPerson(person));
+            }
+            //Equivalent to Console.WriteLine()
+            foreach (PersonResponse p in personsResponse)
+            {
+                _outputHelper.WriteLine(p.ToString());
+            }
+            List<PersonResponse> persons = _personService.GetFilteredPersons(nameof(PersonAddRequest.PersonName), "oe");
+            foreach (PersonResponse person in persons)
+            {
+                if (person.PersonName != null)
+                {
+                    if (person.PersonName.Contains("oe", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Assert.Contains(person, personsResponse);
+                    }
+                }
+                
+                
+            }
+        }
+        #endregion
     }
 }

@@ -70,5 +70,10 @@ namespace XServices
 
             return person.ToPersonResponse();
         }
+
+        public List<PersonResponse> GetFilteredPersons(string searchBy, string? searchText)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -28,6 +28,7 @@ namespace ModelValidationExample.CustomModelBinders
             {
                 person.Password = bindingContext.ValueProvider.GetValue("Password").FirstValue;
             }
+            //... fill up all the property in Person
 
             bindingContext.Result = ModelBindingResult.Success(person);
             return Task.CompletedTask;
