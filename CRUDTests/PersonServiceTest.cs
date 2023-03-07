@@ -348,5 +348,95 @@ namespace CRUDTests
             }
         }
         #endregion
+
+        #region UpdatePerson
+        [Fact]
+        public void UpdatePerson_NullPerson()
+        {
+            //Arrange
+            PersonUpdateRequest personUpdateRequest = null;
+
+            //Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                //Act
+                _personService.UpdatePerson(personUpdateRequest);
+            });
+        }
+
+        [Fact]
+        public void UpdatePerson_InvalidPersonId()
+        {
+            //Arrange
+            PersonUpdateRequest personUpdateRequest = new PersonUpdateRequest() { PersonId = Guid.Empty};
+
+            //Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                //Act
+                _personService.UpdatePerson(personUpdateRequest);
+            });
+        }
+
+        [Fact]
+        public void UpdatePerson_PersonNameIsNull()
+        {
+            //Arrange
+            CountryAddRequest countryRequest = new CountryAddRequest() { CountryName = "Portugal" };
+            CountryResponse countryResponse = _countriesService.AddCountry(countryRequest);
+            PersonAddRequest personRequest = new PersonAddRequest()
+            {
+                PersonName = "John Doe",
+                Address = "Lisbon, Portugal",
+                DateOfBirth = DateTime.Parse("1980-12-02"),
+                CountryId = countryResponse.CountryId,
+                Email = "johndoe@gmail.com",
+                Gender = GenderOptions.Male,
+                ReceiveNewsLetters = true
+            };
+
+            PersonResponse personResponse  = _personService.AddPerson(personRequest);
+
+            PersonUpdateRequest personUpdateRequest = personResponse.ToPersonUpdateRequest();
+            personUpdateRequest.PersonName = null;
+
+            //Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                //Act
+                _personService.UpdatePerson(personUpdateRequest);
+            });
+        }
+
+        [Fact]
+        public void UpdatePerson_PersonFullDetails()
+        {
+            //Arrange
+            CountryAddRequest countryRequest = new CountryAddRequest() { CountryName = "Portugal" };
+            CountryResponse countryResponse = _countriesService.AddCountry(countryRequest);
+            PersonAddRequest personRequest = new PersonAddRequest()
+            {
+                PersonName = "John Doe",
+                Address = "Lisbon, Portugal",
+                DateOfBirth = DateTime.Parse("1980-12-02"),
+                CountryId = countryResponse.CountryId,
+                Email = "johndoe@gmail.com",
+                Gender = GenderOptions.Male,
+                ReceiveNewsLetters = true
+            };
+
+            PersonResponse personResponse = _personService.AddPerson(personRequest);
+
+            PersonUpdateRequest personUpdateRequest = personResponse.ToPersonUpdateRequest();
+            personUpdateRequest.PersonName = "William";
+            personUpdateRequest.Email = "William@gmail.com";
+            PersonResponse personUpdateResponse = _personService.UpdatePerson(personUpdateRequest);
+
+            PersonResponse personByIdResponse = _personService.GetPersonByPersonId(personUpdateResponse.PersonId);
+
+            //Assert
+            Assert.Equal(personByIdResponse, personUpdateResponse);
+        }
+        #endregion
     }
 }

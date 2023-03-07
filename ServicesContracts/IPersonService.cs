@@ -15,6 +15,7 @@ namespace ServicesContracts
         PersonResponse GetPersonByPersonId(Guid? personId);
         List<PersonResponse> GetFilteredPersons(string searchBy, string? searchText);
         List<PersonResponse> GetSortedPersons(List<PersonResponse> allPersons, string sortBy, SortOrderOptions sortOrder);
+        PersonResponse UpdatePerson(PersonUpdateRequest? personUpdateRequest);
 
     }
 }
