@@ -173,7 +173,18 @@ namespace XServices
 
         public bool DeletePerson(Guid? personId)
         {
-            throw new NotImplementedException();
+            if(personId == null)
+            {
+                throw new ArgumentNullException(nameof(personId));
+            }
+            
+            Person? person = _persons.FirstOrDefault(temp => temp.PersonId == personId);
+            if(person == null)
+            {
+                return false;
+            }
+            _persons.Remove(person);
+            return true;
         }
     }
 }

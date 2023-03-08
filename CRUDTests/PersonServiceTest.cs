@@ -468,7 +468,6 @@ namespace CRUDTests
         [Fact]
         public void DeletePerson_InvalidPersonID()
         {
-            
             //Act
             bool isDeleted = _personService.DeletePerson(Guid.NewGuid());
 
