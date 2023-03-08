@@ -142,7 +142,33 @@ namespace XServices
 
         public PersonResponse UpdatePerson(PersonUpdateRequest? personUpdateRequest)
         {
-            throw new NotImplementedException();
+            if(personUpdateRequest == null)
+            {
+                throw new ArgumentNullException(nameof(Person ));
+            }
+                
+            //Validation
+            ValidationHelper.ModelValidation(personUpdateRequest);
+
+            //Get matching person object to update 
+            Person? matchingPerson = _persons.FirstOrDefault(person => person.PersonId == personUpdateRequest.PersonId);
+            if (matchingPerson == null)
+            {
+                throw new ArgumentException("Given person id doesn't exist");
+            }
+
+            //Update all details
+            matchingPerson.PersonId = personUpdateRequest.PersonId;
+            matchingPerson.Address = personUpdateRequest.Address;
+            matchingPerson.ReceiveNewsLetters = personUpdateRequest.ReceiveNewsLetters;
+            matchingPerson.Gender = personUpdateRequest.Gender.ToString();
+            matchingPerson.CountryId = personUpdateRequest.CountryId;
+            matchingPerson.DateOfBirth = personUpdateRequest.DateOfBirth;
+            matchingPerson.Email = personUpdateRequest.Email;
+
+            return matchingPerson.ToPersonResponse();
+
+
         }
     }
 }

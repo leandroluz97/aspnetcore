@@ -66,7 +66,7 @@ namespace ServicesContracts.DTO
                 Address = Address,
                 ReceiveNewsLetters = ReceiveNewsLetters,
 
-            }
+            };
         }
     }
 
