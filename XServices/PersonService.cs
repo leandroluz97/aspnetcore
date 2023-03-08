@@ -170,5 +170,10 @@ namespace XServices
 
 
         }
+
+        public bool DeletePerson(Guid? personId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
