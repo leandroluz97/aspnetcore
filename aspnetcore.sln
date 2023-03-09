@@ -57,7 +57,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entiti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServicesContracts", "ServicesContracts\ServicesContracts.csproj", "{D12C3D1E-C491-4C14-A614-15C644FB86E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XServices", "XServices\XServices.csproj", "{48033B6D-2170-451E-8B8C-B0F86B7EF5CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XServices", "XServices\XServices.csproj", "{48033B6D-2170-451E-8B8C-B0F86B7EF5CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
