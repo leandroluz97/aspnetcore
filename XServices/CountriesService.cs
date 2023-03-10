@@ -7,12 +7,18 @@ namespace XServices
     public class CountriesService : ICountriesService
     {
         List<Country> _countries;
-        public CountriesService()
+        public CountriesService(bool initialize =  true)
         {
             _countries = new List<Country>();
-            //_countries.Add(new Country() { CountryId = Guid.NewGuid(), CountryName = "Caboverde" });
-            //_countries.Add(new Country() { CountryId = Guid.NewGuid(), CountryName = "Portugal" });
-            //_countries.Add(new Country() { CountryId = Guid.NewGuid(), CountryName = "Brazil" });
+            if (initialize)
+            {
+                _countries.Add(new Country() { CountryId = Guid.Parse("515F75D9-F590-4645-A452-9346FE774466"), CountryName = "Caboverde" });
+                _countries.Add(new Country() { CountryId = Guid.Parse("C5B6D48E-1013-49FA-A1EA-0DF7F8943DD2"), CountryName = "USA" });
+                _countries.Add(new Country() { CountryId = Guid.Parse("8D90E67E-300F-4341-BFE4-41654F1792E5"), CountryName = "Portugal" });
+                _countries.Add(new Country() { CountryId = Guid.Parse("E4B742FC-AF91-4634-9EA8-5F92E03F8AFE"), CountryName = "Brazil" });
+                _countries.Add(new Country() { CountryId = Guid.Parse("A283BB1D-CB1D-4CAC-A7D0-E9B4E0721851"), CountryName = "UK" });
+            }
+            
 
         }
 

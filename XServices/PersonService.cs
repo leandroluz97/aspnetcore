@@ -17,10 +17,92 @@ namespace XServices
         readonly private List<Person> _persons;
         readonly private ICountriesService _countriesService;
 
-        public PersonService()
+        public PersonService(bool initialize)
         {
              _persons = new List<Person>();
              _countriesService = new CountriesService();
+            if (initialize)
+            {
+  
+                _persons.Add(new Person()
+                {
+                    PersonId = Guid.Parse("C38959D3-6440-462A-A5FA-590667638BBA"),
+                    PersonName = "Currie", 
+                    Email = "chorlick0@china.com.cn", 
+                    DateOfBirth = DateTime.Parse("1991-02-24"),
+                    Gender = GenderOptions.Male.ToString(), 
+                    Address = "12 Bartillon Way", 
+                    ReceiveNewsLetters = true,
+                });
+                _persons.Add(new Person()
+                {
+                    PersonId = Guid.Parse("C38959D3-6440-462A-A5FA-590667638BBA"),
+                    PersonName = "Currie",
+                    Email = "chorlick0@china.com.cn",
+                    DateOfBirth = DateTime.Parse("1991-02-24"),
+                    Gender = GenderOptions.Male.ToString(),
+                    Address = "12 Bartillon Way",
+                    ReceiveNewsLetters = true,
+                });
+
+                _persons.Add(new Person()
+                {
+                    PersonId = Guid.Parse("CE28E2F2-6991-476C-927D-FC96A7353D70"),
+                    PersonName = "Mireielle",
+                    Email = "mreader1@jalbum.net",
+                    DateOfBirth = DateTime.Parse("2018-01-06"),
+                    Gender = GenderOptions.Female.ToString(),
+                    Address = "32032 Schlimgen Alley",
+                    ReceiveNewsLetters = false,
+                });
+
+                _persons.Add(new Person()
+                {
+                    PersonId = Guid.Parse("8B186BCB-6404-4998-BE0F-8AE7AB8D840D"),
+                    PersonName = "Carlene",
+                    Email = "cpasley2@printfriendly.com",
+                    DateOfBirth = DateTime.Parse("1993-10-23"),
+                    Gender = GenderOptions.Female.ToString(),
+                    Address = "51 Green Circle",
+                    ReceiveNewsLetters = true,
+                });
+
+                _persons.Add(new Person()
+                {
+                    PersonId = Guid.Parse("2FCDB7F6-36BC-4D86-AA38-4EB9E2293518"),
+                    PersonName = "Christabella",
+                    Email = "csmithend3@cmu.edu",
+                    DateOfBirth = DateTime.Parse("1994-02-26"),
+                    Gender = GenderOptions.Female.ToString(),
+                    Address = "46 Calypso Pass",
+                    ReceiveNewsLetters = false,
+                });
+
+                _persons.Add(new Person()
+                {
+                    PersonId = Guid.Parse("D3CFB393-8D7C-497B-918C-2E2DCBA5D893"),
+                    PersonName = "Ariel",
+                    Email = "asawle4@about.com",
+                    DateOfBirth = DateTime.Parse("2001-03-03"),
+                    Gender = GenderOptions.Male.ToString(),
+                    Address = "2873 Sachtjen Junction",
+                    ReceiveNewsLetters = false,
+                });
+
+                _persons.Add(new Person()
+                {
+                    PersonId = Guid.Parse("3824DD2D-0D71-4A56-ADE7-830AACCAF0DF"),
+                    PersonName = "Christine",
+                    Email = "cfitter5@wufoo.com",
+                    DateOfBirth = DateTime.Parse("2011-11-09"),
+                    Gender = GenderOptions.Female.ToString(),
+                    Address = "5 American Road",
+                    ReceiveNewsLetters = false,
+                });
+
+
+            }
+
         }
 
         private PersonResponse ConvertPersonToPersonResponse(Person person)
