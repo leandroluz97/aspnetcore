@@ -27,6 +27,7 @@ namespace XServices
                 _persons.Add(new Person()
                 {
                     PersonId = Guid.Parse("C38959D3-6440-462A-A5FA-590667638BBA"),
+                    CountryId = Guid.Parse("515F75D9-F590-4645-A452-9346FE774466"),
                     PersonName = "Currie", 
                     Email = "chorlick0@china.com.cn", 
                     DateOfBirth = DateTime.Parse("1991-02-24"),
@@ -37,6 +38,7 @@ namespace XServices
                 _persons.Add(new Person()
                 {
                     PersonId = Guid.Parse("C38959D3-6440-462A-A5FA-590667638BBA"),
+                    CountryId = Guid.Parse("C5B6D48E-1013-49FA-A1EA-0DF7F8943DD2"),
                     PersonName = "Currie",
                     Email = "chorlick0@china.com.cn",
                     DateOfBirth = DateTime.Parse("1991-02-24"),
@@ -48,6 +50,7 @@ namespace XServices
                 _persons.Add(new Person()
                 {
                     PersonId = Guid.Parse("CE28E2F2-6991-476C-927D-FC96A7353D70"),
+                    CountryId = Guid.Parse("8D90E67E-300F-4341-BFE4-41654F1792E5"),
                     PersonName = "Mireielle",
                     Email = "mreader1@jalbum.net",
                     DateOfBirth = DateTime.Parse("2018-01-06"),
@@ -59,6 +62,7 @@ namespace XServices
                 _persons.Add(new Person()
                 {
                     PersonId = Guid.Parse("8B186BCB-6404-4998-BE0F-8AE7AB8D840D"),
+                    CountryId = Guid.Parse("E4B742FC-AF91-4634-9EA8-5F92E03F8AFE"),
                     PersonName = "Carlene",
                     Email = "cpasley2@printfriendly.com",
                     DateOfBirth = DateTime.Parse("1993-10-23"),
@@ -70,6 +74,7 @@ namespace XServices
                 _persons.Add(new Person()
                 {
                     PersonId = Guid.Parse("2FCDB7F6-36BC-4D86-AA38-4EB9E2293518"),
+                    CountryId = Guid.Parse("A283BB1D-CB1D-4CAC-A7D0-E9B4E0721851"),
                     PersonName = "Christabella",
                     Email = "csmithend3@cmu.edu",
                     DateOfBirth = DateTime.Parse("1994-02-26"),
@@ -81,6 +86,7 @@ namespace XServices
                 _persons.Add(new Person()
                 {
                     PersonId = Guid.Parse("D3CFB393-8D7C-497B-918C-2E2DCBA5D893"),
+                    CountryId = Guid.Parse("A283BB1D-CB1D-4CAC-A7D0-E9B4E0721851")
                     PersonName = "Ariel",
                     Email = "asawle4@about.com",
                     DateOfBirth = DateTime.Parse("2001-03-03"),
@@ -92,6 +98,7 @@ namespace XServices
                 _persons.Add(new Person()
                 {
                     PersonId = Guid.Parse("3824DD2D-0D71-4A56-ADE7-830AACCAF0DF"),
+                    CountryId = Guid.Parse("A283BB1D-CB1D-4CAC-A7D0-E9B4E0721851"),
                     PersonName = "Christine",
                     Email = "cfitter5@wufoo.com",
                     DateOfBirth = DateTime.Parse("2011-11-09"),
