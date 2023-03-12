@@ -141,7 +141,7 @@ namespace XServices
 
         public List<PersonResponse> GetAllPersons()
         {
-            return _persons.Select(person => person.ToPersonResponse()).ToList();
+            return _persons.Select(person => ConvertPersonToPersonResponse(person)).ToList();
         }
 
         public PersonResponse GetPersonByPersonId(Guid? personId)
@@ -158,7 +158,7 @@ namespace XServices
                 return null;
             }
 
-            return person.ToPersonResponse();
+            return ConvertPersonToPersonResponse(person);
         }
 
         public List<PersonResponse> GetFilteredPersons(string searchBy, string? searchText)
