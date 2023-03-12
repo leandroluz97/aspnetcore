@@ -17,7 +17,7 @@ namespace XServices
         readonly private List<Person> _persons;
         readonly private ICountriesService _countriesService;
 
-        public PersonService(bool initialize)
+        public PersonService(bool initialize = true)
         {
              _persons = new List<Person>();
              _countriesService = new CountriesService();
@@ -86,7 +86,7 @@ namespace XServices
                 _persons.Add(new Person()
                 {
                     PersonId = Guid.Parse("D3CFB393-8D7C-497B-918C-2E2DCBA5D893"),
-                    CountryId = Guid.Parse("A283BB1D-CB1D-4CAC-A7D0-E9B4E0721851")
+                    CountryId = Guid.Parse("A283BB1D-CB1D-4CAC-A7D0-E9B4E0721851"),
                     PersonName = "Ariel",
                     Email = "asawle4@about.com",
                     DateOfBirth = DateTime.Parse("2001-03-03"),
@@ -173,22 +173,22 @@ namespace XServices
 
             switch (searchBy)
             {
-                case nameof(Person.PersonName):
+                case nameof(PersonResponse.PersonName):
                     matchingPersons = allPersons.Where(person => string.IsNullOrEmpty(person.PersonName) || person.PersonName.Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
-                    break;
-                case nameof(Person.Email):
+                    break;        
+                case nameof(PersonResponse.Email):
                     matchingPersons = allPersons.Where(person => string.IsNullOrEmpty(person.Email) ||  person.Email.Contains(searchText)).ToList();
-                    break;
-                case nameof(Person.DateOfBirth):
+                    break;        
+                case nameof(PersonResponse.DateOfBirth):
                     matchingPersons = allPersons.Where(person => person.DateOfBirth == null || person.DateOfBirth.Value.ToString("dd MMMM yyyy").Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
-                    break;
-                case nameof(Person.CountryId):
+                    break;        
+                case nameof(PersonResponse.CountryId):
                     matchingPersons = allPersons.Where(person => string.IsNullOrEmpty(person.Country) || person.Country.Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
-                    break;
-                case nameof(Person.Gender):
+                    break;        
+                case nameof(PersonResponse.Gender):
                     matchingPersons = allPersons.Where(person => string.IsNullOrEmpty(person.Gender)  ||  person.Gender.Contains(searchText, StringComparison.OrdinalIgnoreCase) ).ToList();
-                    break;
-                case nameof(Person.Address):
+                    break;        
+                case nameof(PersonResponse.Address):
                     matchingPersons = allPersons.Where(person => string.IsNullOrEmpty(person.Address) || person.Address.Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
                     break;
                 default:
