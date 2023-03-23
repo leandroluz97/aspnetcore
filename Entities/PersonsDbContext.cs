@@ -10,6 +10,11 @@ namespace Entities
         public DbSet<Country> Countries { get; set; }
         public DbSet<Person> Persons { get; set; }
 
+        public PersonsDbContext(DbContextOptions options): base(options)
+        {
+
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -30,7 +35,7 @@ namespace Entities
             List<Person> persons = System.Text.Json.JsonSerializer.Deserialize<List<Person>>(personsJson);
             foreach (Person person in persons)
             {
-                modelBuilder.Entity<Country>().HasData(person);
+                modelBuilder.Entity<Person>().HasData(person);
             }
         }
     }
