@@ -6,20 +6,10 @@ namespace XServices
 {
     public class CountriesService : ICountriesService
     {
-        List<Country> _countries;
-        public CountriesService(bool initialize =  true)
+        private readonly PersonsDbContext _db;
+        public CountriesService(PersonsDbContext personsDbContext, bool initialize =  true)
         {
-            _countries = new List<Country>();
-            if (initialize)
-            {
-                _countries.Add(new Country() { CountryId = Guid.Parse("515F75D9-F590-4645-A452-9346FE774466"), CountryName = "Caboverde" });
-                _countries.Add(new Country() { CountryId = Guid.Parse("C5B6D48E-1013-49FA-A1EA-0DF7F8943DD2"), CountryName = "USA" });
-                _countries.Add(new Country() { CountryId = Guid.Parse("8D90E67E-300F-4341-BFE4-41654F1792E5"), CountryName = "Portugal" });
-                _countries.Add(new Country() { CountryId = Guid.Parse("E4B742FC-AF91-4634-9EA8-5F92E03F8AFE"), CountryName = "Brazil" });
-                _countries.Add(new Country() { CountryId = Guid.Parse("A283BB1D-CB1D-4CAC-A7D0-E9B4E0721851"), CountryName = "UK" });
-            }
-            
-
+            _db = personsDbContext;
         }
 
         public CountryResponse AddCountry(CountryAddRequest? countryAddRequest)
@@ -32,7 +22,7 @@ namespace XServices
             {
                 throw new ArgumentException(nameof(countryAddRequest.CountryName));
             }
-            if(_countries.Where(c => c.CountryName == countryAddRequest.CountryName).Count() > 0) 
+            if(_db.Countries.Count(c => c.CountryName == countryAddRequest.CountryName) > 0) 
             {
                 throw new ArgumentException("Given country name already exists!");
             }
@@ -41,13 +31,15 @@ namespace XServices
                 CountryId = Guid.NewGuid(), 
                 CountryName = countryAddRequest.CountryName
             };
-            _countries.Add(country);
+            _db.Countries.Add(country);
+            _db.SaveChanges();
+
             return country.ToCountryResponse();
         }
 
         public List<CountryResponse> GetAllCountries()
         {
-            return _countries.Select(country => country.ToCountryResponse()).ToList();
+            return _db.Countries.Select(country => country.ToCountryResponse()).ToList();
         }
 
         public CountryResponse? GetCountryByCountryId(Guid? countryId)
@@ -61,7 +53,7 @@ namespace XServices
             {
                 throw new ArgumentException(nameof(countryId));
             }
-            Country? country = _countries.FirstOrDefault(c => c.CountryId.Equals(countryId));
+            Country? country = _db.Countries.FirstOrDefault(c => c.CountryId.Equals(countryId));
 
             if(country == null)
             {
