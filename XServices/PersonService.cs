@@ -53,7 +53,8 @@ namespace XServices
 
         public List<PersonResponse> GetAllPersons()
         {
-            return _db.Persons.ToList().Select(person => ConvertPersonToPersonResponse(person)).ToList();
+            //return _db.Persons.ToList().Select(person => ConvertPersonToPersonResponse(person)).ToList();
+            return _db.sp_GetAllPersons().Select(person => ConvertPersonToPersonResponse(person)).ToList();
         }
 
         public PersonResponse GetPersonByPersonId(Guid? personId)

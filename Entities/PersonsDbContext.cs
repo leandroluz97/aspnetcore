@@ -2,6 +2,12 @@
 using System;
 using System.Collections.Generic;
 
+//install-Package Microsoft.EntityFrameworkCore.Tools
+//install - Package Microsoft.EntityFrameworkCore.Design
+//Add-Migration <Migration_Name>
+//Add-Migration  <GetPersons_StoredProcedure>
+//**Edit migration file**
+//Update-Database 
 
 namespace Entities
 {
@@ -38,5 +44,12 @@ namespace Entities
                 modelBuilder.Entity<Person>().HasData(person);
             }
         }
+
+        //public  IQueryable<Person> sp_GetAllPersons()
+        public List<Person> sp_GetAllPersons()
+        {
+            return Persons.FromSqlRaw("EXECUTE [dbo].[GetAllPersons]").ToList();
+        }
     }
+
 }

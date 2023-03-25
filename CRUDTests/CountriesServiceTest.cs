@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using XServices;
 using Xunit;
+using Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CRUDTests
 {
@@ -16,7 +18,7 @@ namespace CRUDTests
         private readonly ICountriesService _countriesServices;
         public CountriesServiceTest()
         {
-            _countriesServices = new CountriesService(false);
+            _countriesServices = new CountriesService(new PersonsDbContext(new DbContextOptionsBuilder<PersonsDbContext>().Options));
         }
 
         #region AddCountry
