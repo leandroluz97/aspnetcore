@@ -45,8 +45,9 @@ namespace XServices
             Person person = personRequest.ToPerson();
             person.PersonId = Guid.NewGuid();
 
-            _db.Persons.Add(person);
-            _db.SaveChanges(); 
+            _db.sp_InsertPerson(person);
+            //_db.Persons.Add(person);
+            //_db.SaveChanges(); 
             
             return ConvertPersonToPersonResponse(person);
         }

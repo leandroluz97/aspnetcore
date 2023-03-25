@@ -24,9 +24,6 @@ namespace Entities.Migrations
         {
             string sp_GetAllPersons = @"
                 DROP PROCEDURE [dbo].[GetAllPersons]
-                AS BEGIN
-                    SELECT PersonId, PersonName, Email, DateOfBirth, Gender, CountryId, Address, ReceiveNewsLetters FROM [dbo].[Persons]
-                END
             ";
             migrationBuilder.Sql(sp_GetAllPersons);
         }
