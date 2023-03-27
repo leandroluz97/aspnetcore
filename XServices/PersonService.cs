@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Microsoft.EntityFrameworkCore;
 using ServicesContracts;
 using ServicesContracts.DTO;
 using ServicesContracts.Enums;
@@ -55,6 +56,8 @@ namespace XServices
         public List<PersonResponse> GetAllPersons()
         {
             //return _db.Persons.ToList().Select(person => ConvertPersonToPersonResponse(person)).ToList();
+            var persons =  _db.Persons.Include(p => p.Country).ToList();
+
             return _db.sp_GetAllPersons().Select(person => ConvertPersonToPersonResponse(person)).ToList();
         }
 
@@ -65,7 +68,7 @@ namespace XServices
                 throw new ArgumentNullException(nameof(personId));
             }
 
-            Person? person = _db.Persons.FirstOrDefault(person => person.PersonId.Equals(personId));
+            Person? person = _db.Persons.Include(p => p.Country).FirstOrDefault(person => person.PersonId.Equals(personId));
 
             if(person == null)
             {

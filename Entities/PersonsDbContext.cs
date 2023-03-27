@@ -57,6 +57,14 @@ namespace Entities
             //Add contrains
             modelBuilder.Entity<Person>()
                 .ToTable(t => t.HasCheckConstraint("CHK_TIN", "len([TaxIdentificationNumber]) = 8"));
+
+            //Table Relations (Get Person's country relationship)
+            modelBuilder.Entity<Person>(entity =>
+            {
+                entity.HasOne<Country>(c => c.Country)
+                .WithMany(p => p.Persons)
+                .HasForeignKey(c => c.CountryId);
+            });
         }
 
         //public  IQueryable<Person> sp_GetAllPersons()
