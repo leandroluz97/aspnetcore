@@ -20,23 +20,17 @@ namespace XServices
 
         public PersonService(PersonsDbContext personsDbContext, ICountriesService countriesService)
         {
-             _db = personsDbContext;
-             _countriesService = countriesService;
+            _db = personsDbContext;
+            _countriesService = countriesService;
         }
 
-        private PersonResponse ConvertPersonToPersonResponse(Person person)
-        {
-            PersonResponse personResponse = person.ToPersonResponse();
-            personResponse.Country = _countriesService.GetCountryByCountryId(personResponse.CountryId)?.CountryName;
-            return personResponse;
-        }
         public PersonResponse AddPerson(PersonAddRequest personRequest)
         {
-           if(personRequest == null)
+            if (personRequest == null)
             {
                 throw new ArgumentNullException(nameof(personRequest));
             }
-           if(string.IsNullOrEmpty(personRequest.PersonName))
+            if (string.IsNullOrEmpty(personRequest.PersonName))
             {
                 throw new ArgumentException("PersonName can't be empty");
             }
@@ -49,33 +43,33 @@ namespace XServices
             _db.sp_InsertPerson(person);
             //_db.Persons.Add(person);
             //_db.SaveChanges(); 
-            
-            return ConvertPersonToPersonResponse(person);
+
+            return person.ToPersonResponse();
         }
 
         public List<PersonResponse> GetAllPersons()
         {
             //return _db.Persons.ToList().Select(person => ConvertPersonToPersonResponse(person)).ToList();
-            var persons =  _db.Persons.Include(p => p.Country).ToList();
+            var persons = _db.Persons.Include(p => p.Country).ToList();
 
-            return _db.sp_GetAllPersons().Select(person => ConvertPersonToPersonResponse(person)).ToList();
+            return _db.sp_GetAllPersons().Select(person => person.ToPersonResponse()).ToList();
         }
 
         public PersonResponse GetPersonByPersonId(Guid? personId)
         {
-            if(personId == Guid.Empty)
+            if (personId == Guid.Empty)
             {
                 throw new ArgumentNullException(nameof(personId));
             }
 
             Person? person = _db.Persons.Include(p => p.Country).FirstOrDefault(person => person.PersonId.Equals(personId));
 
-            if(person == null)
+            if (person == null)
             {
                 return null;
             }
 
-            return ConvertPersonToPersonResponse(person);
+            return person.ToPersonResponse();
         }
 
         public List<PersonResponse> GetFilteredPersons(string searchBy, string? searchText)
@@ -83,7 +77,7 @@ namespace XServices
             List<PersonResponse> allPersons = GetAllPersons();
             List<PersonResponse> matchingPersons = allPersons;
 
-            if(string.IsNullOrEmpty(searchBy) || string.IsNullOrEmpty(searchText))
+            if (string.IsNullOrEmpty(searchBy) || string.IsNullOrEmpty(searchText))
             {
                 return matchingPersons;
             }
@@ -92,19 +86,19 @@ namespace XServices
             {
                 case nameof(PersonResponse.PersonName):
                     matchingPersons = allPersons.Where(person => string.IsNullOrEmpty(person.PersonName) || person.PersonName.Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
-                    break;        
+                    break;
                 case nameof(PersonResponse.Email):
-                    matchingPersons = allPersons.Where(person => string.IsNullOrEmpty(person.Email) ||  person.Email.Contains(searchText)).ToList();
-                    break;        
+                    matchingPersons = allPersons.Where(person => string.IsNullOrEmpty(person.Email) || person.Email.Contains(searchText)).ToList();
+                    break;
                 case nameof(PersonResponse.DateOfBirth):
                     matchingPersons = allPersons.Where(person => person.DateOfBirth == null || person.DateOfBirth.Value.ToString("dd MMMM yyyy").Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
-                    break;        
+                    break;
                 case nameof(PersonResponse.CountryId):
                     matchingPersons = allPersons.Where(person => string.IsNullOrEmpty(person.Country) || person.Country.Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
-                    break;        
+                    break;
                 case nameof(PersonResponse.Gender):
-                    matchingPersons = allPersons.Where(person => string.IsNullOrEmpty(person.Gender)  ||  person.Gender.Contains(searchText, StringComparison.OrdinalIgnoreCase) ).ToList();
-                    break;        
+                    matchingPersons = allPersons.Where(person => string.IsNullOrEmpty(person.Gender) || person.Gender.Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
+                    break;
                 case nameof(PersonResponse.Address):
                     matchingPersons = allPersons.Where(person => string.IsNullOrEmpty(person.Address) || person.Address.Contains(searchText, StringComparison.OrdinalIgnoreCase)).ToList();
                     break;
@@ -119,7 +113,7 @@ namespace XServices
 
         public List<PersonResponse> GetSortedPersons(List<PersonResponse> allPersons, string sortBy, SortOrderOptions sortOrder = SortOrderOptions.ASC)
         {
-            if(string.IsNullOrEmpty(sortBy))
+            if (string.IsNullOrEmpty(sortBy))
                 return allPersons;
 
             List<PersonResponse> sortedPersons = (sortBy, sortOrder) switch
@@ -140,7 +134,7 @@ namespace XServices
                 (nameof(PersonResponse.Address), SortOrderOptions.DESC) => allPersons.OrderByDescending(person => person.Address, StringComparer.OrdinalIgnoreCase).ToList(),
                 (nameof(PersonResponse.ReceiveNewsLetters), SortOrderOptions.ASC) => allPersons.OrderBy(person => person.ReceiveNewsLetters).ToList(),
                 (nameof(PersonResponse.ReceiveNewsLetters), SortOrderOptions.DESC) => allPersons.OrderByDescending(person => person.ReceiveNewsLetters).ToList(),
-                _=> allPersons
+                _ => allPersons
 
             };
             return sortedPersons;
@@ -148,11 +142,11 @@ namespace XServices
 
         public PersonResponse UpdatePerson(PersonUpdateRequest? personUpdateRequest)
         {
-            if(personUpdateRequest == null)
+            if (personUpdateRequest == null)
             {
-                throw new ArgumentNullException(nameof(Person ));
+                throw new ArgumentNullException(nameof(Person));
             }
-                
+
             //Validation
             ValidationHelper.ModelValidation(personUpdateRequest);
 
@@ -180,13 +174,13 @@ namespace XServices
 
         public bool DeletePerson(Guid? personId)
         {
-            if(personId == null)
+            if (personId == null)
             {
                 throw new ArgumentNullException(nameof(personId));
             }
-            
+
             Person? person = _db.Persons.FirstOrDefault(temp => temp.PersonId == personId);
-            if(person == null)
+            if (person == null)
             {
                 return false;
             }
