@@ -1,5 +1,6 @@
 ﻿using CRUDoperations.DTO;
 using Entities;
+using Microsoft.EntityFrameworkCore;
 using ServicesContracts;
 
 namespace XServices
@@ -12,7 +13,7 @@ namespace XServices
             _db = personsDbContext;
         }
 
-        public CountryResponse AddCountry(CountryAddRequest? countryAddRequest)
+        public async Task<CountryResponse> AddCountry(CountryAddRequest? countryAddRequest)
         {
             if(countryAddRequest == null)
             {
@@ -22,7 +23,7 @@ namespace XServices
             {
                 throw new ArgumentException(nameof(countryAddRequest.CountryName));
             }
-            if(_db.Countries.Count(c => c.CountryName == countryAddRequest.CountryName) > 0) 
+            if(await _db.Countries.CountAsync(c => c.CountryName == countryAddRequest.CountryName) > 0) 
             {
                 throw new ArgumentException("Given country name already exists!");
             }
@@ -32,17 +33,17 @@ namespace XServices
                 CountryName = countryAddRequest.CountryName
             };
             _db.Countries.Add(country);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
             return country.ToCountryResponse();
         }
 
-        public List<CountryResponse> GetAllCountries()
+        public async Task<List<CountryResponse>> GetAllCountries()
         {
-            return _db.Countries.Select(country => country.ToCountryResponse()).ToList();
+            return await _db.Countries.Select(country => country.ToCountryResponse()).ToListAsync();
         }
 
-        public CountryResponse? GetCountryByCountryId(Guid? countryId)
+        public async Task<CountryResponse>? GetCountryByCountryId(Guid? countryId)
         {
             if (countryId == null)
             {
@@ -53,7 +54,7 @@ namespace XServices
             {
                 throw new ArgumentException(nameof(countryId));
             }
-            Country? country = _db.Countries.FirstOrDefault(c => c.CountryId.Equals(countryId));
+            Country? country = await _db.Countries.FirstOrDefault(c => c.CountryId.Equals(countryId));
 
             if(country == null)
             {
