@@ -54,7 +54,7 @@ namespace XServices
             {
                 throw new ArgumentException(nameof(countryId));
             }
-            Country? country = await _db.Countries.FirstOrDefault(c => c.CountryId.Equals(countryId));
+            Country? country = await _db.Countries.FirstOrDefaultAsync(c => c.CountryId.Equals(countryId));
 
             if(country == null)
             {
