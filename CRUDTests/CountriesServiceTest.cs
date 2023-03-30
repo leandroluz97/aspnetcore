@@ -39,26 +39,26 @@ namespace CRUDTests
         }
 
         [Fact]
-        public void AddCountry_NullCountry()
+        public async Task AddCountry_NullCountry()
         {
             //Arrange
             CountryAddRequest? request = null;
 
             //Assert
-            Assert.ThrowsAsync<ArgumentNullException>(async() => {
+           await Assert.ThrowsAsync<ArgumentNullException>(async() => {
                 //Act
                 await _countriesServices.AddCountry(request);
             });
         }
 
         [Fact]
-        public void AddCountry_NameIsNull()
+        public async Task AddCountry_NameIsNull()
         {
             //Arrange
             CountryAddRequest request = new CountryAddRequest() { CountryName = null };
 
             //Assert
-            Assert.ThrowsAsync<ArgumentException>(async() => {
+            await Assert.ThrowsAsync<ArgumentException>(async() => {
                 //Act
                 await _countriesServices.AddCountry(request);
             });
@@ -120,7 +120,7 @@ namespace CRUDTests
 
         #region GetCountryByCountryId
         [Fact]
-        public void GetCountryByCountryId_GuidIsNull()
+        public async Task GetCountryByCountryId_GuidIsNull()
         {
             //Arrange
             Guid? guid = null;
@@ -134,7 +134,7 @@ namespace CRUDTests
         }
 
         [Fact]
-        public void GetCountryByCountryId_GuidIsInvalid()
+        public async Task GetCountryByCountryId_GuidIsInvalid()
         {
             //Arrange
             Guid guid = Guid.Empty;

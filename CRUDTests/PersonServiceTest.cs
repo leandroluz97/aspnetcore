@@ -30,26 +30,26 @@ namespace CRUDTests
 
         #region AddPerson
         [Fact]
-        public void AddPerson_NullPerson()
+        public async Task AddPerson_NullPerson()
         {
             //Arrange
             PersonAddRequest? request = null;
         
             //Assert
-            Assert.ThrowsAsync<ArgumentNullException>(async () => {
+           await Assert.ThrowsAsync<ArgumentNullException>(async () => {
                 //Act 
                 await _personService.AddPerson(request);
             });
         }
 
         [Fact]
-        public void AddPerson_PersonNameIsNull()
+        public async Task AddPerson_PersonNameIsNull()
         {
             //Arrange
             PersonAddRequest request = new PersonAddRequest() { PersonName = null};
 
             //Assert
-            Assert.ThrowsAsync<ArgumentException>(async() => {
+            await Assert.ThrowsAsync<ArgumentException>(async() => {
                 //Act 
                 await _personService.AddPerson(request);
             });
@@ -109,7 +109,7 @@ namespace CRUDTests
         }
 
         [Fact]
-        public void GetPersonByPersonId_PersonIdIsNull()
+        public async Task GetPersonByPersonId_PersonIdIsNull()
         {
             Guid personId = Guid.Empty;
 
@@ -353,7 +353,7 @@ namespace CRUDTests
 
         #region UpdatePerson
         [Fact]
-        public void UpdatePerson_NullPerson()
+        public async Task UpdatePerson_NullPerson()
         {
             //Arrange
             PersonUpdateRequest personUpdateRequest = null;
@@ -367,7 +367,7 @@ namespace CRUDTests
         }
 
         [Fact]
-        public void UpdatePerson_InvalidPersonId()
+        public async Task UpdatePerson_InvalidPersonId()
         {
             //Arrange
             PersonUpdateRequest personUpdateRequest = new PersonUpdateRequest() { PersonId = Guid.Empty};
