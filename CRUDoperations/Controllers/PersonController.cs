@@ -18,7 +18,7 @@ namespace CRUDoperations.Controllers
 
         [Route("persons/index")]
         [Route("/")]
-        public IActionResult Index(string searchBy, string? searchText, string sortBy = "PersonName", SortOrderOptions sortOrder = SortOrderOptions.ASC )
+        public async Task<IActionResult> Index(string searchBy, string? searchText, string sortBy = "PersonName", SortOrderOptions sortOrder = SortOrderOptions.ASC )
         {
             //Searching
             ViewBag.SearchFields = new Dictionary<string, string>()
@@ -32,12 +32,12 @@ namespace CRUDoperations.Controllers
                 {nameof(PersonResponse.Age), "Age" },
                 {nameof(PersonResponse.ReceiveNewsLetters), "ReceiveNewsLetters" },
             };
-            List<PersonResponse> persons = _personsService.GetFilteredPersons(searchBy, searchText);
+            List<PersonResponse> persons = await _personsService.GetFilteredPersons(searchBy, searchText);
             ViewBag.CurrentSearchBy = searchBy;
             ViewBag.CurrentSearchText = searchText;
 
             //Sorting
-            List<PersonResponse> sortedPersons = _personsService.GetSortedPersons(persons, sortBy, sortOrder);
+            List<PersonResponse> sortedPersons = await _personsService.GetSortedPersons(persons, sortBy, sortOrder);
             ViewBag.CurrentSortBy = sortBy;
             ViewBag.CurrentSortOrder = sortOrder.ToString();
 

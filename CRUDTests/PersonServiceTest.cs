@@ -359,7 +359,7 @@ namespace CRUDTests
             PersonUpdateRequest personUpdateRequest = null;
 
             //Assert
-            Assert.Throws<ArgumentNullException>(() =>
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 //Act
                 await _personService.UpdatePerson(personUpdateRequest);
@@ -373,7 +373,7 @@ namespace CRUDTests
             PersonUpdateRequest personUpdateRequest = new PersonUpdateRequest() { PersonId = Guid.Empty};
 
             //Assert
-            Assert.Throws<ArgumentException>(() =>
+            Assert.ThrowsAsync<ArgumentException>(async() =>
             {
                 //Act
                 await _personService.UpdatePerson(personUpdateRequest);
@@ -381,11 +381,11 @@ namespace CRUDTests
         }
 
         [Fact]
-        public void UpdatePerson_PersonNameIsNull()
+        public async Task UpdatePerson_PersonNameIsNull()
         {
             //Arrange
             CountryAddRequest countryRequest = new CountryAddRequest() { CountryName = "Portugal" };
-            CountryResponse countryResponse = _countriesService.AddCountry(countryRequest);
+            CountryResponse countryResponse = await _countriesService.AddCountry(countryRequest);
             PersonAddRequest personRequest = new PersonAddRequest()
             {
                 PersonName = "John Doe",
@@ -403,7 +403,7 @@ namespace CRUDTests
             personUpdateRequest.PersonName = null;
 
             //Assert
-            Assert.Throws<ArgumentException>(() =>
+            await Assert.ThrowsAsync<ArgumentException>(async() =>
             {
                 //Act
                 await _personService.UpdatePerson(personUpdateRequest);
@@ -411,11 +411,11 @@ namespace CRUDTests
         }
 
         [Fact]
-        public void UpdatePerson_PersonFullDetails()
+        public async Task UpdatePerson_PersonFullDetails()
         {
             //Arrange
             CountryAddRequest countryRequest = new CountryAddRequest() { CountryName = "Portugal" };
-            CountryResponse countryResponse = _countriesService.AddCountry(countryRequest);
+            CountryResponse countryResponse = await _countriesService.AddCountry(countryRequest);
             PersonAddRequest personRequest = new PersonAddRequest()
             {
                 PersonName = "John Doe",
