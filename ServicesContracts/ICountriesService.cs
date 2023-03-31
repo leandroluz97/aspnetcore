@@ -8,5 +8,6 @@ namespace ServicesContracts
         Task<List<CountryResponse>> GetAllCountries();
         Task<CountryResponse>? GetCountryByCountryId(Guid? countryId);
 
+
     }
 }

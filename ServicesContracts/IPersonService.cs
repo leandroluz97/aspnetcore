@@ -17,7 +17,8 @@ namespace ServicesContracts
         Task<List<PersonResponse>> GetSortedPersons(List<PersonResponse> allPersons, string sortBy, SortOrderOptions sortOrder);
         Task<PersonResponse> UpdatePerson(PersonUpdateRequest? personUpdateRequest);
         Task<bool> DeletePerson(Guid? personId);
-            
+        Task<MemoryStream> GetPersonsCSV();
+
 
     }
 }
