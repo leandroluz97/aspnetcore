@@ -84,9 +84,15 @@ namespace CRUDoperations.Controllers
         [Route("persons/PersonsCSV")]
         public async Task<IActionResult> PersonsCSV()
         {
-           MemoryStream memoryStream = await _personsService.GetPersonsCSV();
+            MemoryStream memoryStream = await _personsService.GetPersonsCSV();
             return File(memoryStream, "application/octet-stream", "persons.csv");
-            
+        }
+
+        [Route("persons/PersonsExcel")]
+        public async Task<IActionResult> PersonsEXCEL()
+        {
+            MemoryStream memoryStream = await _personsService.GetPersonsCSV();
+            return File(memoryStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "persons.xlsx");
         }
     }
 }
