@@ -10,7 +10,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ICountriesService, CountriesService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
 
-builder.Services.AddDbContext<PersonsDbContext>
+builder.Services.AddDbContext<ApplicationDbContext>
     (options =>
     {
         options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]);
