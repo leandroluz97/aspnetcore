@@ -1,21 +1,23 @@
 ﻿using CRUDoperations.DTO;
 using Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 using ServicesContracts;
 
 namespace XServices
 {
     public class CountriesService : ICountriesService
     {
-        private readonly PersonsDbContext _db;
-        public CountriesService(PersonsDbContext personsDbContext)
+        private readonly ApplicationDbContext _db;
+        public CountriesService(ApplicationDbContext personsDbContext)
         {
             _db = personsDbContext;
         }
 
         public async Task<CountryResponse> AddCountry(CountryAddRequest? countryAddRequest)
         {
-            if(countryAddRequest == null)
+            if (countryAddRequest == null)
             {
                 throw new ArgumentNullException(nameof(countryAddRequest));
             }
@@ -23,13 +25,13 @@ namespace XServices
             {
                 throw new ArgumentException(nameof(countryAddRequest.CountryName));
             }
-            if(await _db.Countries.CountAsync(c => c.CountryName == countryAddRequest.CountryName) > 0) 
+            if (await _db.Countries.CountAsync(c => c.CountryName == countryAddRequest.CountryName) > 0)
             {
                 throw new ArgumentException("Given country name already exists!");
             }
-            Country country = new Country() 
-            { 
-                CountryId = Guid.NewGuid(), 
+            Country country = new Country()
+            {
+                CountryId = Guid.NewGuid(),
                 CountryName = countryAddRequest.CountryName
             };
             _db.Countries.Add(country);
@@ -56,12 +58,48 @@ namespace XServices
             }
             Country? country = await _db.Countries.FirstOrDefaultAsync(c => c.CountryId.Equals(countryId));
 
-            if(country == null)
+            if (country == null)
             {
                 return null;
             }
 
             return country.ToCountryResponse();
+        }
+
+        public async Task<int> UploadCountriesFromExcelFile(IFormFile formFile)
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            await formFile.CopyToAsync(memoryStream);
+
+            int countryInserted = 0;
+            using (ExcelPackage excelPackage = new ExcelPackage(memoryStream))
+            {
+                ExcelWorksheet worksheet = excelPackage.Workbook.Worksheets["Countries"];
+
+                int rowCount = worksheet.Dimension.Rows;
+
+                for (int row = 2; row < rowCount; row++)
+                {
+                    string? cellValue = Convert.ToString(worksheet.Cells[row, 1].Value);
+
+                    if (!string.IsNullOrWhiteSpace(cellValue))
+                    {
+                        var countryName = cellValue;
+                        if (_db.Countries.Where(c => c.CountryName == countryName).Any())
+                        {
+                            var country = new Country()
+                            {
+                                CountryName = countryName,
+                            };
+
+                            _db.Countries.Add(country);
+                            await _db.SaveChangesAsync();
+                            countryInserted++;
+                        }
+                    }
+                }
+            }
+            return countryInserted;
         }
     }
 }

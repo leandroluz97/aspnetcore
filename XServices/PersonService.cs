@@ -19,10 +19,10 @@ namespace XServices
 {
     public class PersonService : IPersonService
     {
-        readonly private PersonsDbContext _db;
+        readonly private ApplicationDbContext _db;
         readonly private ICountriesService _countriesService;
 
-        public PersonService(PersonsDbContext personsDbContext, ICountriesService countriesService)
+        public PersonService(ApplicationDbContext personsDbContext, ICountriesService countriesService)
         {
             _db = personsDbContext;
             _countriesService = countriesService;

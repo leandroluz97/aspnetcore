@@ -23,8 +23,8 @@ namespace CRUDTests
 
         public PersonServiceTest(ITestOutputHelper testOutputHelper)
         {
-            _countriesService = new CountriesService(new PersonsDbContext(new DbContextOptionsBuilder<PersonsDbContext>().Options));
-            _personService = new PersonService(new PersonsDbContext(new DbContextOptionsBuilder<PersonsDbContext>().Options), _countriesService);
+            _countriesService = new CountriesService(new ApplicationDbContext(new DbContextOptionsBuilder<ApplicationDbContext>().Options));
+            _personService = new PersonService(new ApplicationDbContext(new DbContextOptionsBuilder<ApplicationDbContext>().Options), _countriesService);
             _outputHelper = testOutputHelper;
         }
 
