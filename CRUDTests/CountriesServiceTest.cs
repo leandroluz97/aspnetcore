@@ -21,12 +21,10 @@ namespace CRUDTests
         public CountriesServiceTest()
         {
             var countriesInitalData = new List<Country>() { };
-            DbContextMock<ApplicationDbContext> dbContextMock = new DbContextMock<ApplicationDbContext>(
-                new DbContextOptionsBuilder<ApplicationDbContext>().Options    
-            );
+            DbContextMock<ApplicationDbContext> dbContextMock = new DbContextMock<ApplicationDbContext>(new DbContextOptionsBuilder<ApplicationDbContext>().Options);
             ApplicationDbContext dbContext = dbContextMock.Object;
+
             dbContextMock.CreateDbSetMock(temp => temp.Countries, countriesInitalData);
-            //var dbContext = new ApplicationDbContext(new DbContextOptionsBuilder<ApplicationDbContext>().Options);
             _countriesServices = new CountriesService(dbContext);
         }
 
