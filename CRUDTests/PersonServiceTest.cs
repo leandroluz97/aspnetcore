@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using XServices;
 using Xunit;
 using Xunit.Abstractions;
+using FluentAssertions;
 
 namespace CRUDTests
 {
@@ -34,11 +35,11 @@ namespace CRUDTests
 
             dbContextMock.CreateDbSetMock(temp => temp.Countries, countriesInitalData);
             dbContextMock.CreateDbSetMock(temp => temp.Persons, personsInitalData);
-            
+
             _countriesService = new CountriesService(dbContext);
             _personService = new PersonService(dbContext, _countriesService);
             _outputHelper = testOutputHelper;
-            _fixture = new Fixture();   
+            _fixture = new Fixture();
         }
 
         #region AddPerson
@@ -47,12 +48,16 @@ namespace CRUDTests
         {
             //Arrange
             PersonAddRequest? request = null;
-        
-            //Assert
-           await Assert.ThrowsAsync<ArgumentNullException>(async () => {
-                //Act 
+
+            //Act 
+            Func<Task> action = async () =>
+            {
                 await _personService.AddPerson(request);
-            });
+            };
+
+            //Assert
+            await action.Should().ThrowAsync<ArgumentNullException>();
+            //await Assert.ThrowsAsync<ArgumentNullException>
         }
 
         [Fact]
@@ -63,11 +68,15 @@ namespace CRUDTests
              .With(temp => temp.PersonName, string.Empty)
              .Create();
 
-            //Assert
-            await Assert.ThrowsAsync<ArgumentException>(async() => {
-                //Act 
+            //Act
+            Func<Task> action = async () =>
+            {
                 await _personService.AddPerson(request);
-            });
+            };
+
+            //Assert
+            await action.Should().ThrowAsync<ArgumentException>();
+            //Assert.ThrowsAsync<ArgumentException>
         }
 
         [Fact]
@@ -77,20 +86,21 @@ namespace CRUDTests
             PersonAddRequest request = _fixture.Build<PersonAddRequest>()
              .With(temp => temp.Email, "johndoe@gmail.com")
              .Create();
-           
 
             //Act
             PersonResponse personResponse = await _personService.AddPerson(request);
             List<PersonResponse> persons = await _personService.GetAllPersons();
 
             //Assert
-            Assert.True(personResponse.PersonId != Guid.Empty);
-            Assert.Contains(personResponse, persons);
+            //Assert.True(personResponse.PersonId != Guid.Empty);
+            personResponse.PersonId.Should().NotBe(Guid.Empty);
+            //Assert.Contains(personResponse, persons);
+            persons.Should().Contain(personResponse);
         }
         #endregion
 
         #region GetPersonByPersonId
-        
+
         [Fact]
         public async Task GetPersonByPersonId_FoundPerson()
         {
@@ -107,8 +117,9 @@ namespace CRUDTests
             PersonResponse person = await _personService.GetPersonByPersonId(response.PersonId);
 
             //Assert
-            Assert.True(person.PersonId != Guid.Empty);
-          
+            Assert.Equal(person, response);
+            person.Should().Be(response);
+
         }
 
         [Fact]
@@ -116,7 +127,8 @@ namespace CRUDTests
         {
             Guid personId = Guid.Empty;
 
-            await Assert.ThrowsAsync<ArgumentNullException>(async () => {
+            await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
                 await _personService.GetPersonByPersonId(personId);
             });
         }
@@ -128,7 +140,8 @@ namespace CRUDTests
 
             PersonResponse person = await _personService.GetPersonByPersonId(personId);
 
-            Assert.Null(person);
+            //Assert.Null(person);
+            person.Should().BeNull();
         }
         #endregion
 
@@ -137,7 +150,8 @@ namespace CRUDTests
         public async Task GetAllPersons_IsEmpty()
         {
             List<PersonResponse> persons = await _personService.GetAllPersons();
-            Assert.Empty(persons);
+            //Assert.Empty(persons);
+            persons.Should().BeEmpty();
         }
 
         [Fact]
@@ -148,13 +162,13 @@ namespace CRUDTests
             PersonAddRequest personRequest1 = _fixture.Build<PersonAddRequest>()
              .With(temp => temp.Email, "johndoe@gmail.com")
              .With(temp => temp.CountryId, countryResponse.CountryId)
-             .Create(); 
+             .Create();
             PersonAddRequest personRequest2 = _fixture.Build<PersonAddRequest>()
              .With(temp => temp.Email, "johndoe@gmail.com")
              .With(temp => temp.CountryId, countryResponse.CountryId)
              .Create();
 
-            List<PersonAddRequest> personsList = new List<PersonAddRequest>(){personRequest1, personRequest2};
+            List<PersonAddRequest> personsList = new List<PersonAddRequest>() { personRequest1, personRequest2 };
             List<PersonResponse> personsResponse = new List<PersonResponse>();
             foreach (PersonAddRequest person in personsList)
             {
@@ -166,11 +180,11 @@ namespace CRUDTests
                 _outputHelper.WriteLine(p.ToString());
             }
             List<PersonResponse> persons = await _personService.GetAllPersons();
-            foreach (PersonResponse person in persons)
-            {
-                Assert.Contains(person, personsResponse);
-            }
-            //Assert.NotEmpty(persons);
+            //foreach (PersonResponse person in persons)
+            //{
+            //    Assert.Contains(person, personsResponse);
+            //}
+            persons.Should().BeEquivalentTo(personsList);
         }
         #endregion
 
@@ -223,8 +237,8 @@ namespace CRUDTests
             PersonAddRequest personRequest3 = _fixture.Build<PersonAddRequest>()
              .With(temp => temp.Email, "Martajones@gmail.com")
              .With(temp => temp.CountryId, countryResponse.CountryId)
-             .Create(); 
-            
+             .Create();
+
 
             List<PersonAddRequest> personsList = new List<PersonAddRequest>() { personRequest1, personRequest2, personRequest3 };
             List<PersonResponse> personsResponse = new List<PersonResponse>();
@@ -301,11 +315,11 @@ namespace CRUDTests
             PersonUpdateRequest personUpdateRequest = null;
 
             //Assert
-           await Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                //Act
-                await _personService.UpdatePerson(personUpdateRequest);
-            });
+            await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+             {
+                 //Act
+                 await _personService.UpdatePerson(personUpdateRequest);
+             });
         }
 
         [Fact]
@@ -318,7 +332,7 @@ namespace CRUDTests
                  .Create();
 
             //Assert
-            await Assert.ThrowsAsync<ArgumentException>(async() =>
+            await Assert.ThrowsAsync<ArgumentException>(async () =>
             {
                 //Act
                 await _personService.UpdatePerson(personUpdateRequest);
@@ -336,13 +350,13 @@ namespace CRUDTests
              .With(temp => temp.CountryId, countryResponse.CountryId)
              .Create();
 
-            PersonResponse personResponse  = await _personService.AddPerson(personRequest);
+            PersonResponse personResponse = await _personService.AddPerson(personRequest);
 
             PersonUpdateRequest personUpdateRequest = personResponse.ToPersonUpdateRequest();
             personUpdateRequest.PersonName = null;
 
             //Assert
-            await Assert.ThrowsAsync<ArgumentException>(async() =>
+            await Assert.ThrowsAsync<ArgumentException>(async () =>
             {
                 //Act
                 await _personService.UpdatePerson(personUpdateRequest);
@@ -395,7 +409,7 @@ namespace CRUDTests
             Assert.True(isDeleted);
         }
 
-        [Fact] 
+        [Fact]
         public async Task DeletePerson_InvalidPersonID()
         {
             //Act
