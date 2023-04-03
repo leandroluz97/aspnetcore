@@ -133,7 +133,7 @@ namespace CRUDTests
             Guid? guid = null;
 
             //Assert
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            await Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 //Act
                 await _countriesServices.GetCountryByCountryId(guid);
@@ -147,7 +147,7 @@ namespace CRUDTests
             Guid guid = Guid.Empty;
 
             //Assert
-            Assert.ThrowsAsync<ArgumentException>(async () =>
+            await Assert.ThrowsAsync<ArgumentException>(async () =>
             {
                 //Act
                 await _countriesServices.GetCountryByCountryId(guid);
