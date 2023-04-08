@@ -34,14 +34,15 @@ namespace CRUDTests
 
         public PersonServiceTest(ITestOutputHelper testOutputHelper)
         {
-            var countriesInitalData = new List<Country>() { };
-            var personsInitalData = new List<Person>() { };
+            //MOCK DBCONTEXT
+            //var countriesInitalData = new List<Country>() { };
+            //var personsInitalData = new List<Person>() { };
 
-            DbContextMock<ApplicationDbContext> dbContextMock = new DbContextMock<ApplicationDbContext>(new DbContextOptionsBuilder<ApplicationDbContext>().Options);
-            ApplicationDbContext dbContext = dbContextMock.Object;
+            //DbContextMock<ApplicationDbContext> dbContextMock = new DbContextMock<ApplicationDbContext>(new DbContextOptionsBuilder<ApplicationDbContext>().Options);
+            //ApplicationDbContext dbContext = dbContextMock.Object;
 
-            dbContextMock.CreateDbSetMock(temp => temp.Countries, countriesInitalData);
-            dbContextMock.CreateDbSetMock(temp => temp.Persons, personsInitalData);
+            //dbContextMock.CreateDbSetMock(temp => temp.Countries, countriesInitalData);
+            //dbContextMock.CreateDbSetMock(temp => temp.Persons, personsInitalData);
 
             _outputHelper = testOutputHelper;
             _fixture = new Fixture();
