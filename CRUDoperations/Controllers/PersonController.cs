@@ -56,14 +56,14 @@ namespace CRUDoperations.Controllers
 
         [Route("persons/create")]
         [HttpPost]
-        public IActionResult Create(PersonAddRequest personAddRequest)
+        public async Task<IActionResult>  Create(PersonAddRequest personAddRequest)
         {
             if (!ModelState.IsValid)
             {
                 var countries = _countriesService.GetAllCountries();
                 ViewBag.Countries = countries;
                 ViewBag.Errors = ModelState.Values.SelectMany(err => err.Errors).Select(err => err.ErrorMessage).ToList();
-                return View();
+                return View(personAddRequest);
             }
 
             _personsService.AddPerson(personAddRequest);
