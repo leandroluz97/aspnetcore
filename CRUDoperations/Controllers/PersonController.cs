@@ -10,10 +10,12 @@ namespace CRUDoperations.Controllers
     {
         private readonly IPersonService _personsService;
         private readonly ICountriesService _countriesService;
-        public PersonController(IPersonService personService, ICountriesService countriesService)
+        private readonly ILogger<PersonController> _logger;
+        public PersonController(IPersonService personService, ICountriesService countriesService, ILogger<PersonController> logger)
         {
             _personsService = personService;
             _countriesService = countriesService;
+            _logger = logger;   
         }
 
 
@@ -21,6 +23,8 @@ namespace CRUDoperations.Controllers
         [Route("/")]
         public async Task<IActionResult> Index(string searchBy, string? searchText, string sortBy = "PersonName", SortOrderOptions sortOrder = SortOrderOptions.ASC)
         {
+            _logger.LogInformation("Index action method of PersonsController");
+            _logger.LogInformation($"searchBy: {searchBy}, searchtext: {searchText}, sortBy: {sortBy}, sortOrder: {sortOrder}");
             //Searching
             ViewBag.SearchFields = new Dictionary<string, string>()
             {
