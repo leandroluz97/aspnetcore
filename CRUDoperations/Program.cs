@@ -6,6 +6,16 @@ using ServicesContracts;
 using XServices;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Logging
+builder.Host.ConfigureLogging(loggingProvider => { 
+    loggingProvider.ClearProviders(); //Cleared all providers
+    loggingProvider.AddConsole(); //Added console logger
+    loggingProvider.AddDebug(); //Added console debug
+    loggingProvider.AddEventLog(); //Added console debug
+});
+
+
 builder.Services.AddControllersWithViews();
 
 //Add services into IoC container
@@ -25,6 +35,13 @@ if (builder.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
+
+app.Logger.LogDebug("debug-message");
+app.Logger.LogInformation("information-message");
+app.Logger.LogWarning("warning-message");
+app.Logger.LogError("error-message");
+app.Logger.LogCritical("critical-message");
+
 if (!builder.Environment.IsEnvironment("Test"))
 {
     Rotativa.AspNetCore.RotativaConfiguration.Setup("wwwroot", wkhtmltopdfRelativePath: "Rotativa");
