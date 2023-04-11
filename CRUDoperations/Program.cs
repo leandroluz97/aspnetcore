@@ -2,19 +2,32 @@ using Entities;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using RepositoryContracts;
+using Serilog;
 using ServicesContracts;
 using XServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //Logging
-builder.Host.ConfigureLogging(loggingProvider => { 
-    loggingProvider.ClearProviders(); //Cleared all providers
-    loggingProvider.AddConsole(); //Added console logger
-    loggingProvider.AddDebug(); //Added console debug
-    loggingProvider.AddEventLog(); //Added console debug
-});
+//builder.Host.ConfigureLogging(loggingProvider => { 
+//    loggingProvider.ClearProviders(); //Cleared all providers
+//    loggingProvider.AddConsole(); //Added console logger
+//    loggingProvider.AddDebug(); //Added console debug
+//    loggingProvider.AddEventLog(); //Added console debug
+//});
 
+//Serilog
+builder.Host.UseSerilog((
+    HostBuilderContext context, 
+    IServiceProvider services, 
+    LoggerConfiguration configuration) => 
+    {
+        configuration.ReadFrom.Configuration(context.Configuration) //Read configuration settings from build-in Iconfiguration
+        .ReadFrom.Services(services) //Read out current app's services
+        .Enrich.FromLogContext()
+        .WriteTo.Console();
+    }
+);
 
 builder.Services.AddControllersWithViews();
 
@@ -44,6 +57,7 @@ if (builder.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
+//To display loggs related to request same as in nodejs
 app.UseHttpLogging();
 
 //app.Logger.LogDebug("debug-message");

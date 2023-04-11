@@ -49,7 +49,7 @@ namespace CRUDTests
             _personsRepositoryMock = new Mock<IPersonsRepository>();
             _personsRepository = _personsRepositoryMock.Object;
             _countriesService = new CountriesService(null);
-            _personService = new PersonService(_personsRepository);
+            _personService = new PersonService(_personsRepository, null);
         }
 
         #region AddPerson
