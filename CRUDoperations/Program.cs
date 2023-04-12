@@ -52,6 +52,10 @@ builder.Services.AddHttpLogging(options =>
 });
 
 var app = builder.Build();
+
+//Add extra log after request is completed
+app.UseSerilogRequestLogging(); 
+
 if (builder.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();

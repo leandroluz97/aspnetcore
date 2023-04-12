@@ -30,5 +30,10 @@ namespace Entities
 
         public Country? Country { get; set; }
 
+        public override string ToString()
+        {
+            return $"PersonId:{PersonId}, Name:{PersonName}, Email:{Email}, Gender:{Gender}, Address:{Address}, ReceiveNewsLetters:{ReceiveNewsLetters}";
+        }
+
     }
 }
