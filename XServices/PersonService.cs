@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using OfficeOpenXml;
 using RepositoryContracts;
 using Serilog;
+using SerilogTimings;
 using ServicesContracts;
 using ServicesContracts.DTO;
 using ServicesContracts.Enums;
@@ -86,8 +87,11 @@ namespace XServices
 
         public async Task<List<PersonResponse>> GetFilteredPersons(string searchBy, string? searchText)
         {
+            List<Person> allPersons;
             _logger.LogInformation("GetFilteredPersons of PersonService");
-            List<Person> allPersons = searchBy switch
+            using(Operation.Time("Time for Filtered Person from Database"))
+            {
+                allPersons = searchBy switch
             {
                 nameof(PersonResponse.PersonName) =>
                   await _personsRepository.GetFilteredPersons(person => person.PersonName.Contains(searchText)),
@@ -104,6 +108,7 @@ namespace XServices
 
                   _ => await _personsRepository.GetAllPersons()
             };
+            }//end of using block of SerilogTiming
 
             _diagnosticContext.Set("Persons", allPersons);
 

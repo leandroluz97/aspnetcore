@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CRUDoperations.Filters.ActionFilters;
+using Microsoft.AspNetCore.Mvc;
 using Rotativa.AspNetCore;
 using ServicesContracts;
 using ServicesContracts.DTO;
@@ -21,6 +22,7 @@ namespace CRUDoperations.Controllers
 
         [Route("persons/index")]
         [Route("/")]
+        [TypeFilter(typeof(PersonsListActionFilter))]
         public async Task<IActionResult> Index(string searchBy, string? searchText, string sortBy = "PersonName", SortOrderOptions sortOrder = SortOrderOptions.ASC)
         {
             _logger.LogInformation("Index action method of PersonsController");
