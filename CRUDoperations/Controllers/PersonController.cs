@@ -28,20 +28,20 @@ namespace CRUDoperations.Controllers
             _logger.LogInformation("Index action method of PersonsController");
             _logger.LogInformation($"searchBy: {searchBy}, searchtext: {searchText}, sortBy: {sortBy}, sortOrder: {sortOrder}");
             //Searching
-            ViewBag.SearchFields = new Dictionary<string, string>()
-            {
-                {nameof(PersonResponse.PersonName), "Person Name" },
-                {nameof(PersonResponse.Email), "Email" },
-                {nameof(PersonResponse.DateOfBirth), "Date of Birth" },
-                {nameof(PersonResponse.Gender), "Gender" },
-                {nameof(PersonResponse.CountryId), "Country" },
-                {nameof(PersonResponse.Address), "Address" },
-                {nameof(PersonResponse.Age), "Age" },
-                {nameof(PersonResponse.ReceiveNewsLetters), "ReceiveNewsLetters" },
-            };
+            //ViewBag.SearchFields = new Dictionary<string, string>()
+            //{
+            //    {nameof(PersonResponse.PersonName), "Person Name" },
+            //    {nameof(PersonResponse.Email), "Email" },
+            //    {nameof(PersonResponse.DateOfBirth), "Date of Birth" },
+            //    {nameof(PersonResponse.Gender), "Gender" },
+            //    {nameof(PersonResponse.CountryId), "Country" },
+            //    {nameof(PersonResponse.Address), "Address" },
+            //    {nameof(PersonResponse.Age), "Age" },
+            //    {nameof(PersonResponse.ReceiveNewsLetters), "ReceiveNewsLetters" },
+            //};
             List<PersonResponse> persons = await _personsService.GetFilteredPersons(searchBy, searchText);
-            ViewBag.CurrentSearchBy = searchBy;
-            ViewBag.CurrentSearchText = searchText;
+            //ViewBag.CurrentSearchBy = searchBy;
+            //ViewBag.CurrentSearchText = searchText;
 
             //Sorting
             List<PersonResponse> sortedPersons = await _personsService.GetSortedPersons(persons, sortBy, sortOrder);
