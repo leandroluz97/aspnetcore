@@ -1,3 +1,4 @@
+using CRUDoperations.Filters.ActionFilters;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
@@ -29,7 +30,14 @@ builder.Host.UseSerilog((
     }
 );
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    //options.Filters.Add<ResponseHeaderActionFilter>();
+    //builder.Services store the services
+    //builder.Services.BuildServiceProvider() dispatchs the services
+    var logger = builder.Services.BuildServiceProvider().GetRequiredService<ILogger<ResponseHeaderActionFilter>>();
+    options.Filters.Add(new ResponseHeaderActionFilter(logger, "My-Key-From-Global", "My-Value-From-Global"));
+});
 
 //Add services into IoC container
 builder.Services.AddScoped<ICountriesService, CountriesService>();
