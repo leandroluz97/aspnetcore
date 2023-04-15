@@ -1,4 +1,5 @@
 ﻿using CRUDoperations.Filters.ActionFilters;
+using CRUDoperations.Filters.ExceptionFilter;
 using CRUDoperations.Filters.ResourceFilters;
 using CRUDoperations.Filters.ResultFilters;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using ServicesContracts.Enums;
 
 namespace CRUDoperations.Controllers
 {
+    [TypeFilter(typeof(HandleExceptionFilter))]
     public class PersonController : Controller
     {
         private readonly IPersonService _personsService;
