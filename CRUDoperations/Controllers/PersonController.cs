@@ -1,4 +1,6 @@
 ﻿using CRUDoperations.Filters.ActionFilters;
+using CRUDoperations.Filters.ResourceFilters;
+using CRUDoperations.Filters.ResultFilters;
 using Microsoft.AspNetCore.Mvc;
 using Rotativa.AspNetCore;
 using ServicesContracts;
@@ -24,6 +26,7 @@ namespace CRUDoperations.Controllers
         [Route("/")]
         [TypeFilter(typeof(PersonsListActionFilter))]
         [TypeFilter(typeof(ResponseHeaderActionFilter), Arguments = new object[] { "X-Custom-Key", "Custom-Value", 1 })]
+        [TypeFilter(typeof(PersonListResultFilter))]
         public async Task<IActionResult> Index(string searchBy, string? searchText, string sortBy = "PersonName", SortOrderOptions sortOrder = SortOrderOptions.ASC)
         {
             _logger.LogInformation("Index action method of PersonsController");
@@ -54,7 +57,7 @@ namespace CRUDoperations.Controllers
 
         [Route("persons/create")]
         [HttpGet]
-        [TypeFilter(typeof(ResponseHeaderActionFilter), Arguments = new object[] { "my-Key", "my-Value" })]
+        [TypeFilter(typeof(ResponseHeaderActionFilter), Arguments = new object[] { "my-Key", "my-Value", 4 })]
         public async Task<IActionResult> Create()
         {
             var countries = await _countriesService.GetAllCountries();
@@ -64,17 +67,19 @@ namespace CRUDoperations.Controllers
 
         [Route("persons/create")]
         [HttpPost]
-        public async Task<IActionResult>  Create(PersonAddRequest personAddRequest)
+        [TypeFilter(typeof(PersonCreateAndEditPostActionFilter))]
+        //[TypeFilter(typeof(FeatureDisabledResourceFilter))]
+        public async Task<IActionResult>  Create(PersonAddRequest personRequest)
         {
-            if (!ModelState.IsValid)
-            {
-                var countries = _countriesService.GetAllCountries();
-                ViewBag.Countries = countries;
-                ViewBag.Errors = ModelState.Values.SelectMany(err => err.Errors).Select(err => err.ErrorMessage).ToList();
-                return View(personAddRequest);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    var countries = _countriesService.GetAllCountries();
+            //    ViewBag.Countries = countries;
+            //    ViewBag.Errors = ModelState.Values.SelectMany(err => err.Errors).Select(err => err.ErrorMessage).ToList();
+            //    return View(personRequest);
+            //}
 
-            _personsService.AddPerson(personAddRequest);
+            await _personsService.AddPerson(personRequest);
             return RedirectToAction("Index", "Person");
         }
 
