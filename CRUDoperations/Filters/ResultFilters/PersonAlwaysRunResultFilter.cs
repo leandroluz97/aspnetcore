@@ -6,12 +6,15 @@ namespace CRUDoperations.Filters.ResultFilters
     {
         public void OnResultExecuted(ResultExecutedContext context)
         {
-            throw new NotImplementedException();
         }
 
         public void OnResultExecuting(ResultExecutingContext context)
         {
-            throw new NotImplementedException();
+            // skip all the other filters where [SkipFilter] is used
+            if (context.Filters.OfType<SkipFilter>().Any())
+            {
+                return;
+            }
         }
     }
 }

@@ -27,7 +27,7 @@ namespace CRUDoperations.Controllers
         [Route("persons/index")]
         [Route("/")]
         [TypeFilter(typeof(PersonsListActionFilter))]
-        [TypeFilter(typeof(ResponseHeaderActionFilter), Arguments = new object[] { "X-Custom-Key", "Custom-Value", 1 })]
+        [ResponseHeaderFilterFactory("X-Custom-Key", "Custom-Value", 1)] //custom attribute
         [TypeFilter(typeof(PersonListResultFilter))]
         public async Task<IActionResult> Index(string searchBy, string? searchText, string sortBy = "PersonName", SortOrderOptions sortOrder = SortOrderOptions.ASC)
         {
@@ -59,7 +59,7 @@ namespace CRUDoperations.Controllers
 
         [Route("persons/create")]
         [HttpGet]
-        [TypeFilter(typeof(ResponseHeaderActionFilter), Arguments = new object[] { "my-Key", "my-Value", 4 })]
+        [ResponseHeaderFilterFactory( "my-Key", "my-Value", 4)]
         public async Task<IActionResult> Create()
         {
             var countries = await _countriesService.GetAllCountries();

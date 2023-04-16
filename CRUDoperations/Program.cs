@@ -30,13 +30,15 @@ builder.Host.UseSerilog((
     }
 );
 
+builder.Services.AddTransient<ResponseHeaderActionFilter>();
+
 builder.Services.AddControllersWithViews(options =>
 {
     //options.Filters.Add<ResponseHeaderActionFilter>();
     //builder.Services store the services
     //builder.Services.BuildServiceProvider() dispatchs the services
     var logger = builder.Services.BuildServiceProvider().GetRequiredService<ILogger<ResponseHeaderActionFilter>>();
-    options.Filters.Add(new ResponseHeaderActionFilter(logger, "My-Key-From-Global", "My-Value-From-Global", 2));
+    options.Filters.Add(new ResponseHeaderActionFilter(logger) { Key = "My-Key-From-Global", Value = "My-Value-From-Global", Order = 2 });
 });
 
 //Add services into IoC container
