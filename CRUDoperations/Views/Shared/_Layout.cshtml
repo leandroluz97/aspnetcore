@@ -9,17 +9,39 @@
 </head>
 <body>
     <div class="container">
-        <div class="navbar">
-            <div class="navbar">CRUD Demo</div>
-            <ul>
-                <li>
-                    <a href="~/persons/index">Persons</a>
-                    <a href="~/countries/UploadFromExcel">Upload Countries</a>
-                </li>
-            </ul>
-        </div>
         <div class="page-content">
-            @RenderBody()
+                <div class="margin-bottom">
+                    <div class="flex" id="top-bar-div">
+                         <div class="flex-1" id="top-bar-div">
+                             <h1 class="app-title">
+                                 <i class="fa-solid fa-people-simple"></i>
+                                 Contect Manager
+                             </h1>
+                         </div>
+                         <div class="flex-1 pr" id="search-box-div">
+                             <div class="navbar">
+                                <ul>
+                                    <li>
+                                        <a href="~/account/Register">Register</a>
+                                        <a href="~/account/Login">Login</a>
+                                    </li>
+                                </ul>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            <div class="navbar">
+                <div class="navbar">CRUD Demo</div>
+                <ul>
+                    <li>
+                        <a href="~/persons/index">Persons</a>
+                        <a href="~/countries/UploadFromExcel">Upload Countries</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="page-content">
+                @RenderBody()
+            </div>
         </div>
     </div>
 </body>

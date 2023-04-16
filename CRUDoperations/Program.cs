@@ -1,4 +1,5 @@
 using CRUDoperations.Filters.ActionFilters;
+using CRUDoperations.StartupExtensions;
 using Entities;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
@@ -30,36 +31,7 @@ builder.Host.UseSerilog((
     }
 );
 
-builder.Services.AddTransient<ResponseHeaderActionFilter>();
-
-builder.Services.AddControllersWithViews(options =>
-{
-    //options.Filters.Add<ResponseHeaderActionFilter>();
-    //builder.Services store the services
-    //builder.Services.BuildServiceProvider() dispatchs the services
-    var logger = builder.Services.BuildServiceProvider().GetRequiredService<ILogger<ResponseHeaderActionFilter>>();
-    options.Filters.Add(new ResponseHeaderActionFilter(logger) { Key = "My-Key-From-Global", Value = "My-Value-From-Global", Order = 2 });
-});
-
-//Add services into IoC container
-builder.Services.AddScoped<ICountriesService, CountriesService>();
-builder.Services.AddScoped<IPersonService, PersonService>();
-builder.Services.AddScoped<ICountriesRepository, CountriesRepository>();
-builder.Services.AddScoped<IPersonsRepository, PersonsRepository>();
-
-builder.Services.AddDbContext<ApplicationDbContext>
-    (options =>
-    {
-        options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]);
-    });
-
-
-//Add custom properties to logging
-builder.Services.AddHttpLogging(options =>
-{
-    options.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.RequestProperties
-    | Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.ResponsePropertiesAndHeaders;
-});
+builder.Services.ConfigureServices(builder.Configuration);
 
 var app = builder.Build();
 
