@@ -1,6 +1,7 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using Entities;
+using Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using OfficeOpenXml;
@@ -72,7 +73,7 @@ namespace XServices
         {
             if (personId == Guid.Empty)
             {
-                throw new ArgumentNullException(nameof(personId));
+                throw new InvalidPersonIdException(nameof(personId));
             }
 
             Person? person = await _personsRepository.GetPersonByPersonId(personId.Value);

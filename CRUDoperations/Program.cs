@@ -7,6 +7,7 @@ using RepositoryContracts;
 using Serilog;
 using ServicesContracts;
 using XServices;
+using CRUDoperations.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +42,10 @@ app.UseSerilogRequestLogging();
 if (builder.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandlingMiddleware();
 }
 
 //To display loggs related to request same as in nodejs
