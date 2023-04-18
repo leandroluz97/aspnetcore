@@ -13,6 +13,7 @@ using ServicesContracts.Enums;
 using Microsoft.AspNetCore.Mvc;
 using FluentAssertions;
 using CRUDoperations.DTO;
+using Microsoft.Extensions.Logging;
 
 namespace CRUDTests
 {
@@ -20,9 +21,11 @@ namespace CRUDTests
     {
         private readonly IPersonService _personsService;
         private readonly ICountriesService _countriesService;
+        private readonly ILogger<PersonController> _logger;
 
         private readonly Mock<ICountriesService> _countriesServiceMock;
         private readonly Mock<IPersonService> _personsServiceMock;
+        private readonly Mock<ILogger<PersonController>> _loggerMock;
 
         private readonly Fixture _fixture;
 
@@ -32,9 +35,11 @@ namespace CRUDTests
 
             _countriesServiceMock = new Mock<ICountriesService>();
             _personsServiceMock = new Mock<IPersonService>();
+            _loggerMock = new Mock<ILogger<PersonController>>();
 
             _countriesService = _countriesServiceMock.Object;
             _personsService = _personsServiceMock.Object;
+            _logger = _loggerMock.Object;
         }
 
         #region Index
@@ -44,7 +49,7 @@ namespace CRUDTests
             // Arrange
             List<PersonResponse> persons_response_list = _fixture.Create<List<PersonResponse>>();
 
-            PersonController personController = new PersonController(_personsService, _countriesService);
+            PersonController personController = new PersonController(_personsService, _countriesService, _logger);
 
             _personsServiceMock.Setup(temp => temp.GetFilteredPersons(It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(persons_response_list);
@@ -82,7 +87,7 @@ namespace CRUDTests
             _personsServiceMock.Setup(temp => temp.AddPerson(It.IsAny<PersonAddRequest>()))
                 .ReturnsAsync(person_response);
 
-            PersonController personController = new PersonController(_personsService, _countriesService);
+            PersonController personController = new PersonController(_personsService, _countriesService, _logger);
 
             //act 
             personController.ModelState.AddModelError("PersonName", "Person Name can't be blank");
@@ -111,7 +116,7 @@ namespace CRUDTests
             _personsServiceMock.Setup(temp => temp.AddPerson(It.IsAny<PersonAddRequest>()))
                 .ReturnsAsync(person_response);
 
-            PersonController personController = new PersonController(_personsService, _countriesService);
+            PersonController personController = new PersonController(_personsService, _countriesService, _logger);
 
             //act 
             IActionResult result = await personController.Create(person_add_request);
