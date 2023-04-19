@@ -23,7 +23,6 @@ namespace ServicesContracts.DTO
         public string? Address { get; set; }
         public bool ReceiveNewsLetters { get; set; }
 
-
         public Person ToPerson()
         {
             return new Person()

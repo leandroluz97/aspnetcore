@@ -17,10 +17,7 @@ namespace Entities
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Person> Persons { get; set; }
 
-        public ApplicationDbContext(DbContextOptions options) : base(options)
-        {
-
-        }
+        public ApplicationDbContext(DbContextOptions options) : base(options){ }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -85,7 +82,6 @@ namespace Entities
                 new SqlParameter("@Address", person.Address),
                 new SqlParameter("@ReceiveNewsLetters", person.ReceiveNewsLetters),
             };
-
             return Database.ExecuteSqlRaw("EXECUTE [dbo].[InsertPerson] @PersonId, @PersonName, @Email, @DateOfBirth, @Gender, @CountryId, @Address, @ReceiveNewsLetters", parameters);
         }
     }

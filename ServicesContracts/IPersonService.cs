@@ -20,6 +20,5 @@ namespace ServicesContracts
         Task<MemoryStream> GetPersonsCSV();
         Task<MemoryStream> GetPersonsExcel();
 
-
     }
 }
