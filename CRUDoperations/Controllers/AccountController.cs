@@ -9,9 +9,11 @@ namespace CRUDoperations.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        public AccountController(UserManager<ApplicationUser> userManager)
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInMAnager)
         {
             _userManager = userManager;
+            _signInManager = signInMAnager;
         }
 
         [HttpGet]
@@ -28,7 +30,7 @@ namespace CRUDoperations.Controllers
                 ViewBag.Errors = ModelState.Values.SelectMany(err => err.Errors).Select(err => err.ErrorMessage);
                 return View(registerDto);
             }
-           
+
             ApplicationUser user = new ApplicationUser()
             {
                 Email = registerDto.Email,
@@ -40,6 +42,8 @@ namespace CRUDoperations.Controllers
             var result = await _userManager.CreateAsync(user, registerDto.Password);
             if (result.Succeeded)
             {
+                await _signInManager.SignInAsync(user, isPersistent: false);
+
                 return RedirectToAction(nameof(PersonController.Index), "Person");
             }
 
