@@ -53,5 +53,36 @@ namespace CRUDoperations.Controllers
             }
             return View(registerDto);
         }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginDto loginDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Errors = ModelState.Values.SelectMany(err => err.Errors).Select(err => err.ErrorMessage);
+                return View(loginDto);
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(loginDto.Email, loginDto.Password, isPersistent:false, lockoutOnFailure:false);
+            if (result.Succeeded)
+            {
+                return RedirectToAction(nameof(PersonController.Index), "Person");
+            }
+            ModelState.AddModelError("Login","Invalid email or password");
+            return View(loginDto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction(nameof(PersonController.Index), "Person");
+        }
     }
 }
