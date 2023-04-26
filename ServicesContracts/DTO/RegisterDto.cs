@@ -27,6 +27,6 @@ namespace ServicesContracts.DTO
 
         [Required(ErrorMessage = "ConfirmPassword can't be blank")]
         [DataType(DataType.Password)]
-        public int ConfirmPassword { get; set; }
+        public string ConfirmPassword { get; set; }
     }
 }
