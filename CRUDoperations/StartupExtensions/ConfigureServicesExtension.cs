@@ -1,5 +1,7 @@
 ﻿using CRUDoperations.Filters.ActionFilters;
 using Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using RepositoryContracts;
@@ -35,6 +37,13 @@ namespace CRUDoperations.StartupExtensions
                     options.UseSqlServer(configuration["ConnectionStrings:DefaultConnection"]);
                 });
 
+            //Configure Identity
+            services
+                .AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders()
+                .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ApplicationDbContext, Guid>>()
+                .AddRoleStore<RoleStore<ApplicationRole, ApplicationDbContext, Guid>>();
 
             //Add custom properties to logging
             services.AddHttpLogging(options =>
