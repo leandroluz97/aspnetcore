@@ -64,8 +64,9 @@ if (!builder.Environment.IsEnvironment("Test"))
 
 app.UseStaticFiles();
 
+app.UseRouting(); //Identify action method based on route
 app.UseAuthentication();  //Read Identity cookie  
-app.UseRouting(); //Identify action metthod based on route
+app.UseAuthorization();  //Validates access permission of the user
 app.MapControllers(); // Execute the filter pipeline
 
 app.Run();
